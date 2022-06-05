@@ -1,13 +1,16 @@
 <script setup lang="ts">
 	import SideList from './components/SideList.vue';
+	import TopBar from './components/TopBar.vue';
 </script>
 
 <template>
 	<div class="common-layout">
 		<el-container>
-			<el-header>Header</el-header>
+			<el-header>
+				<top-bar></top-bar>
+			</el-header>
 			<el-container>
-				<el-aside>
+				<el-aside width="200px">
 					<side-list></side-list>
 				</el-aside>
 				<el-container>

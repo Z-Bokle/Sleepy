@@ -1,12 +1,14 @@
 <template>
     <el-scrollbar>
         <el-menu default-active="suggest" @open="handleOpen" @close="handleClose" router="true">
+        <el-space direction="vertical" size="large" :fill="true">
             <el-menu-item-group v-for="item in listItems" :title="item.title" class="el-menu-item-group">
                 <el-menu-item v-for="subItem in item.subItems" :index="subItem.index">
                     <dynamic-icon :type="subItem.icon"></dynamic-icon>
                     <span>{{subItem.text}}</span>
                 </el-menu-item>
             </el-menu-item-group>
+        </el-space>    
         </el-menu>
 
     </el-scrollbar>
@@ -15,8 +17,21 @@
 <script lang="ts" setup>
 import dynamicIcon from './ListIcon';
 
+interface subItem{
+    //对应一个el-menu-item
+    index:string,
+    text:string,
+    router:string,
+    icon:string
+}
 
-let listItems = [{
+interface item{
+    //对应一个el-menu-item-group
+    title:string,
+    subItems:subItem[]
+}
+
+let listItems:item[] = [{
     title:"Online Music",
     subItems:[{
         index:"suggest",
@@ -59,9 +74,3 @@ const handleClose = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
 </script>
-
-<style>
-.el-menu-item-group{
-    margin-bottom: 26px;
-}
-</style>
