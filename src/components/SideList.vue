@@ -2,10 +2,10 @@
     <el-scrollbar>
         <el-menu default-active="suggest" @open="handleOpen" @close="handleClose" router="true">
         <el-space direction="vertical" size="large" :fill="true">
-            <el-menu-item-group v-for="item in listItems" :title="item.title" class="el-menu-item-group">
-                <el-menu-item v-for="subItem in item.subItems" :index="subItem.index">
-                    <dynamic-icon :type="subItem.icon"></dynamic-icon>
-                    <span>{{subItem.text}}</span>
+            <el-menu-item-group v-for="menuItemGroup in menuItemGroups" :title="menuItemGroup.title" class="el-menu-item-group">
+                <el-menu-item v-for="menuItem in menuItemGroup.menuItems" :index="menuItem.index">
+                    <dynamic-icon :type="menuItem.icon"></dynamic-icon>
+                    <span>{{menuItem.text}}</span>
                 </el-menu-item>
             </el-menu-item-group>
         </el-space>    
@@ -17,53 +17,53 @@
 <script lang="ts" setup>
 import dynamicIcon from './ListIcon';
 
-interface subItem{
-    //对应一个el-menu-item
+interface menuItem{
+    // 菜单项目
+    // 索引，不重复字符串，同时兼顾菜单路由
     index:string,
+    // 显示文本
     text:string,
-    router:string,
+    // 菜单图标对应字符串
     icon:string
 }
 
-interface item{
-    //对应一个el-menu-item-group
+interface menuItemGroup{
+    // 菜单组
+    // 组标题
     title:string,
-    subItems:subItem[]
+    // 组内菜单项
+    menuItems:menuItem[]
 }
 
-let listItems:item[] = [{
+const menuItemGroups:menuItemGroup[] = [{
     title:"Online Music",
-    subItems:[{
+    menuItems:[{
         index:"suggest",
-        text:"Suggest",
-        router:"",
+        text:"推荐",
         icon:"star"
     },
     {
         index:"music-hall",
         text:"Music Hall",
-        router:"",
         icon:"mic"
     }]
 },
 {
     title:"My Misic",
-    subItems:[{
+    menuItems:[{
         index:"like",
         text:"Like",
-        router:"",
         icon:"collection"
     },
     {
         index:"recently-play",
         text:"Recently Play",
-        router:"",
         icon:"clock"
     }]
 },
 {
     title:"My Music List",
-    subItems:[]
+    menuItems:[]
 }];
 
 
