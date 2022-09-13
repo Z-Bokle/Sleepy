@@ -1,16 +1,17 @@
-import { h } from "vue";
+import { h, type VNode } from "vue";
 import * as Icons from "@element-plus/icons-vue";
 import {ElIcon} from 'element-plus';
 const dynamicIcon = (props:any) => {
-    
-    const nodeMap = new Map([
+    // nodeMap为type字符串和Icons下实例对应VNode的映射
+    const nodeMap:Map<String,VNode> = new Map([
         ['star',h(Icons.Star)],
         ['mic',h(Icons.Mic)],
         ['collection',h(Icons.Collection)],
         ['clock',h(Icons.Clock)]
     ]);
-    const iconNode = nodeMap.get(props.type);
-    const vnode = h(ElIcon,null,[iconNode]);
+    // iconNode为undefined时表示传入的图标未定义
+    const iconNode:VNode|undefined = nodeMap.get(props.type);
+    const vnode:VNode = h(ElIcon,null,[iconNode]);
     return vnode;
 };
 

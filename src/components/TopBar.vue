@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useToggle, useDark } from '@vueuse/core'
 import { Sunny,Moon } from '@element-plus/icons-vue';
 import Logo from './Logo';
