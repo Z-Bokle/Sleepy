@@ -1,27 +1,25 @@
 <script setup lang="ts">
-	import SideList from './components/SideList.vue';
-	import TopBar from './components/TopBar.vue';
+import SideList from './components/SideList.vue';
+import MainView from './components/MainView.vue';
 </script>
 
 <template>
-	<div class="common-layout">
-		<el-container>
-			<el-header>
-				<top-bar></top-bar>
-			</el-header>
-			<el-container>
-				<el-aside width="200px">
-					<side-list></side-list>
-				</el-aside>
-				<el-container>
-					<el-main>Main</el-main>
-					<el-footer>Footer</el-footer>
-				</el-container>
-			</el-container>
-		</el-container>
-	</div>
+  <div class="common-layout">
+    <el-container>
+      <el-aside width="200px">
+		<side-list></side-list>
+	  </el-aside>
+      <el-container>
+        <el-header style="background-color:brown">Header</el-header>
+        <el-main>
+			<main-view></main-view>
+		</el-main>
+      </el-container>
+    </el-container>
+  </div>
 </template>
 
-<style>
+
+<style scoped>
 
 </style>
