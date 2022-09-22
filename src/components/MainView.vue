@@ -1,6 +1,8 @@
 <template>
-    <movie-item></movie-item>
+    <!-- router出口 -->
+    <router-view></router-view>
 </template>
+
 <script lang="ts" setup>
-import MovieItem from './MainViewComp/MovieDB/MovieItem/MovieItem.vue'
+
 </script>

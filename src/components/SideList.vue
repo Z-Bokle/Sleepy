@@ -1,13 +1,13 @@
 <template>
-    <el-scrollbar height="97vh">
-        <logo :is-dark="isDark" class="logo"></logo>
-
-        <el-menu default-active="suggest" @open="handleOpen" @close="handleClose" router="true">
-
+    <el-scrollbar>
+        <el-menu default-active="suggest" @open="handleOpen" @close="handleClose" :router="true">
+            <component :is="isDark ? logo : logoDark"></component>
             <el-menu-item-group v-for="menuItemGroup in menuItemGroups" :title="menuItemGroup.title"
                 class="el-menu-item-group">
                 <el-menu-item v-for="menuItem in menuItemGroup.menuItems" :index="menuItem.index">
-                    <dynamic-icon :type="menuItem.icon"></dynamic-icon>
+                    <el-icon>
+                        <component :is="menuItem.icon"></component>
+                    </el-icon>
                     <span>{{menuItem.text}}</span>
                 </el-menu-item>
             </el-menu-item-group>
@@ -19,18 +19,23 @@
                 </el-menu-item>
             </el-menu-item-group>
 
-
         </el-menu>
 
     </el-scrollbar>
 </template>
 
 <script lang="ts" setup>
-import dynamicIcon from './SideListComp/ListIcon';
-import logo from './SideListComp/Logo';
 import { useToggle, useDark } from '@vueuse/core'
-import { Sunny, Moon } from '@element-plus/icons-vue';
-import Logo from './SideListComp/Logo';
+import { 
+    Sunny, 
+    Moon, 
+    Grid, 
+    Star,
+    Collection,
+    Clock,
+} from '@element-plus/icons-vue';
+import { h, type VNode } from 'vue';
+
 
 const isDark = useDark();
 const toggieDark = useToggle(isDark);
@@ -41,8 +46,8 @@ interface menuItem {
     index: string,
     // 显示文本
     text: string,
-    // 菜单图标对应字符串
-    icon: string
+    // 菜单图标
+    icon: VNode
 }
 
 interface menuItemGroup {
@@ -58,12 +63,12 @@ const menuItemGroups: menuItemGroup[] = [{
     menuItems: [{
         index: "suggest",
         text: "推荐",
-        icon: "star"
+        icon: h(Star)
     },
     {
-        index: "music-hall",
-        text: "Music Hall",
-        icon: "mic"
+        index: "moviedb",
+        text: "电影数据库",
+        icon: h(Grid)
     }]
 },
 {
@@ -71,14 +76,32 @@ const menuItemGroups: menuItemGroup[] = [{
     menuItems: [{
         index: "like",
         text: "Like",
-        icon: "collection"
+        icon: h(Collection)
     },
     {
         index: "recently-play",
         text: "Recently Play",
-        icon: "clock"
+        icon: h(Clock)
     }]
 }];
+
+const logo = h('img',{
+    src: './assets/img/Sleepy_Logo.png',
+    draggable: false,
+    style:` width:133px;
+            height:60px;
+            margin-left: 15px;
+            margin-top: 5px;`
+})
+
+const logoDark = h('img',{
+    src: './assets/img/Sleepy_Logo_Dark.png',
+    draggable: false,
+    style:` width:133px;
+            height:60px;
+            margin-left: 15px;
+            margin-top: 5px;`
+})
 
 const handleOpen = (key: string, keyPath: string[]) => {
     console.log(key, keyPath)
@@ -92,10 +115,7 @@ const handleClose = (key: string, keyPath: string[]) => {
 </script>
 
 <style scoped>
-.logo {
-    margin-left: 26px;
-}
 .el-menu-item-text{
-    margin-right: 30px;
+    margin-right: 23px;
 }
 </style>
