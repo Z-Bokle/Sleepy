@@ -11,7 +11,7 @@ import TopBar from './components/TopBar.vue';
         <side-list></side-list>
       </el-aside>
       <el-container>
-        <el-header>
+        <el-header class="el-header">
           <top-bar></top-bar>
         </el-header>
         <el-main>
@@ -26,5 +26,8 @@ import TopBar from './components/TopBar.vue';
 <style>
 body {
   margin: 0;
+}
+.el-header{
+    margin-top: 20px;
 }
 </style>

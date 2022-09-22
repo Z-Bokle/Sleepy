@@ -1,13 +1,13 @@
 <template>
     <el-card style="width: 250px;height: 420px;">
     <img
-        :src="src"
+        :src="img"
         referrerpolicy="no-referrer"
         width="210"
         height="280"
     />
-    <!-- referrerpolicy解决防盗链403问题 -->
-    <h1>{{ title }}</h1>
+    <!-- referrer policy解决防盗链403问题 -->
+    <h1>{{ name }}</h1>
     <div style="
     overflow: hidden;
     -webkit-line-clamp: 3;
@@ -21,9 +21,9 @@
 <script lang="ts" setup>
 defineProps({
     // 图片外链
-    src: String,
+    img: String,
     // 电影名
-    title: { type:String, required:true },
+    name: { type:String, required:true },
     // 描述
     desc: { type:String, required:true }
 });

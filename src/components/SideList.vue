@@ -1,6 +1,6 @@
 <template>
     <el-scrollbar>
-        <el-menu default-active="suggest" @open="handleOpen" @close="handleClose" :router="true">
+        <el-menu @open="handleOpen" @close="handleClose" :router="true">
             <component :is="isDark ? logo : logoDark"></component>
             <el-menu-item-group v-for="menuItemGroup in menuItemGroups" :title="menuItemGroup.title"
                 class="el-menu-item-group">
@@ -25,7 +25,8 @@
 </template>
 
 <script lang="ts" setup>
-import { useToggle, useDark } from '@vueuse/core'
+import { useToggle, useDark } from '@vueuse/core';
+import { h, type VNode, ref } from 'vue';
 import { 
     Sunny, 
     Moon, 
@@ -34,8 +35,6 @@ import {
     Collection,
     Clock,
 } from '@element-plus/icons-vue';
-import { h, type VNode } from 'vue';
-
 
 const isDark = useDark();
 const toggieDark = useToggle(isDark);
@@ -85,7 +84,7 @@ const menuItemGroups: menuItemGroup[] = [{
     }]
 }];
 
-const logo = h('img',{
+const logo:VNode = h('img',{
     src: './assets/img/Sleepy_Logo.png',
     draggable: false,
     style:` width:133px;
@@ -94,7 +93,7 @@ const logo = h('img',{
             margin-top: 5px;`
 })
 
-const logoDark = h('img',{
+const logoDark:VNode = h('img',{
     src: './assets/img/Sleepy_Logo_Dark.png',
     draggable: false,
     style:` width:133px;
@@ -110,7 +109,6 @@ const handleOpen = (key: string, keyPath: string[]) => {
 const handleClose = (key: string, keyPath: string[]) => {
     console.log(key, keyPath)
 }
-
 
 </script>
 

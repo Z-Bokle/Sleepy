@@ -1,5 +1,4 @@
 <template>
-    <span>{{ currentPage }}</span>
     <el-pagination 
     background 
     layout="prev, pager, next" 
@@ -13,6 +12,7 @@
 import { onUpdated, ref } from "vue";
 const currentPage = ref(1);
 onUpdated(() => {
+    // 发送ajax请求，获取页码对应的电影信息
     console.log("page is updated")
 });
 </script>
