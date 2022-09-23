@@ -1,5 +1,10 @@
 <template>
-    <el-page-header :icon="ArrowLeft" :title="'返回'" @back="clickBack">
+    <div style="display:flex;">
+    <div class="logo">
+        <component :is="isDark ? logo : logoDark"></component>
+    </div>
+
+    <el-page-header :icon="ArrowLeft" :title="'返回'" @back="clickBack" class="header">
         <template #breadcrumb>
             <el-breadcrumb :separator-icon="ArrowRight">
                 <el-breadcrumb-item v-for="link in links" :to="{path: link.route}">
@@ -9,13 +14,16 @@
         </template>
         
         <template #extra>
-            <div class="user-data">
-                <el-popover placement="bottom-end">
-                    <template #reference>
-                        <el-avatar></el-avatar>
-                    </template>
-                    <span>这里展示用户个人信息捏</span>
-                </el-popover>
+            <div class="extra">
+                <el-icon :size="25" class="icon" @click="drawerVisible = true"><Setting /></el-icon>  
+                <div class="user-data">
+                    <el-popover placement="bottom-end">
+                        <template #reference>
+                            <el-avatar></el-avatar>
+                        </template>
+                        <span>这里展示用户个人信息捏</span>
+                    </el-popover>
+                </div>
             </div>
         </template>
 
@@ -25,26 +33,45 @@
             </div>
         </template>
     </el-page-header>
+</div>
+    <el-drawer v-model="drawerVisible">
+        <template #header>
+            <h1>设置</h1>
+        </template>
+
+        <span class="setting-text">夜间模式</span>
+        <el-switch v-model="isDark" :active-icon="Moon" active-color="#000000" :inactive-icon="Sunny"
+            inactive-color="#AAAAAA" :inline-prompt="true" size="large" @change="toggleDark" />
+    </el-drawer>
+
 </template>
 
 <script lang="ts" setup>
-import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue';
-import { onMounted, onUpdated, ref } from 'vue';
-import { useRouter,useRoute } from 'vue-router';
+import { ArrowLeft, ArrowRight, Setting, Sunny, Moon  } from '@element-plus/icons-vue';
+import { h, ref, type VNode } from 'vue';
+import { useRouter } from 'vue-router';
+import { useDark, useToggle } from '@vueuse/core';
 
 const router = useRouter()
-const route = useRoute()
+
+const isDark = useDark();
+const toggleDark = useToggle(isDark)
+
+const drawerVisible = ref(false);
+
 const links = ref([{
     part:'',
     route:''
 }])
+
 const clickBack = () => {
     // 回退一步
     router.back()
 }
 
+
 // 路由后置钩子，在路由改变后触发，用于修改面包屑的内容
-// 同时用于在路由变化时修改SideList高亮
+//  TODO 同时用于修改menu的高亮
 router.afterEach((to, from) => {
     console.log(to.fullPath)
     let parts = to.fullPath.split('/')
@@ -55,10 +82,26 @@ router.afterEach((to, from) => {
             route:'/' + parts.slice(1,i + 1).join('/')
         })
     }
-    //设置主页文本
+    //设置主页的面包屑文本
     links.value[0].part = "主页"
+
 })
 
+const logo:VNode = h('img',{
+    src: './assets/img/Sleepy_Logo.png',
+    draggable: false,
+    style:` width:133px;
+            height:60px;
+            `
+})
+
+const logoDark:VNode = h('img',{
+    src: './assets/img/Sleepy_Logo_Dark.png',
+    draggable: false,
+    style:` width:133px;
+            height:60px;
+            `
+})
 </script>
 
 <style scoped>
@@ -71,5 +114,21 @@ router.afterEach((to, from) => {
 }
 .title > span{
     font-weight: bold;
+}
+.extra{
+    display: flex;
+}
+.icon{
+    margin-right: 16px;
+    margin-top: 8px;
+}
+.setting-text{
+    margin-right: 30px;
+}
+.header{
+    width: 90vw;
+}
+.logo{
+    margin-right: 40px;
 }
 </style>
