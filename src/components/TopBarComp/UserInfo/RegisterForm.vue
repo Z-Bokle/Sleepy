@@ -101,8 +101,10 @@ const rules = {
     ]
 }
 
-const getCode = async (email:string) => {
-    let res = await axios.post(`/user/code`,{email:email})
-    console.log(res)
+const getCode = (email:string) => {
+    axios.post('/user/code',{'email':email})
+    .then((res) => {
+        console.log(res)
+    })
 }
 </script>
