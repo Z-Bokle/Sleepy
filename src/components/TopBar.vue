@@ -1,48 +1,41 @@
 <template>
     <div style="display:flex;">
-    <div class="logo">
-        <component :is="isDark ? logo : logoDark"></component>
-    </div>
+        <div class="logo">
+            <component :is="isDark ? logo : logoDark"></component>
+        </div>
 
-    <el-page-header :icon="ArrowLeft" :title="'返回'" @back="clickBack" class="header">
-        <template #breadcrumb>
-            <el-breadcrumb :separator-icon="ArrowRight">
-                <el-breadcrumb-item v-for="link in links" :to="{path: link.route}">
-                    {{ link.part }}
-                </el-breadcrumb-item>
-            </el-breadcrumb>
-        </template>
-        
-        <template #extra>
-            <div class="extra">
-                <el-icon :size="25" class="icon" @click="drawerVisible = true"><Setting /></el-icon>  
-                <div class="user-data">
-                    <el-popover placement="bottom-end">
-                        <template #reference>
-                            <el-avatar></el-avatar>
-                        </template>
-                        <span>这里展示用户个人信息捏</span>
-                    </el-popover>
+        <el-page-header :icon="ArrowLeft" :title="'返回'" @back="clickBack" class="header">
+            <template #breadcrumb>
+                <el-breadcrumb :separator-icon="ArrowRight">
+                    <el-breadcrumb-item v-for="link in links" :to="{path: link.route}">
+                        {{ link.part }}
+                    </el-breadcrumb-item>
+                </el-breadcrumb>
+            </template>
+            
+            <template #extra>
+                <div class="extra">
+                    <el-icon :size="25" class="icon" @click="drawerVisible = true"><Setting /></el-icon>  
+                    <user-info></user-info>
                 </div>
-            </div>
-        </template>
+            </template>
 
-        <template #content>
-            <div class="title">
-                <span>这个是标题</span>
-            </div>
-        </template>
-    </el-page-header>
-</div>
-    <el-drawer v-model="drawerVisible">
-        <template #header>
-            <h1>设置</h1>
-        </template>
+            <template #content>
+                <div class="title">
+                    <span>这个是标题</span>
+                </div>
+            </template>
+        </el-page-header>
+    </div>
+        <el-drawer v-model="drawerVisible">
+            <template #header>
+                <h1>设置</h1>
+            </template>
 
-        <span class="setting-text">夜间模式</span>
-        <el-switch v-model="isDark" :active-icon="Moon" active-color="#000000" :inactive-icon="Sunny"
-            inactive-color="#AAAAAA" :inline-prompt="true" size="large" @change="toggleDark" />
-    </el-drawer>
+            <span class="setting-text">夜间模式</span>
+            <el-switch v-model="isDark" :active-icon="Moon" active-color="#000000" :inactive-icon="Sunny"
+                inactive-color="#AAAAAA" :inline-prompt="true" size="large" @change="toggleDark" />
+        </el-drawer>
 
 </template>
 
@@ -51,7 +44,7 @@ import { ArrowLeft, ArrowRight, Setting, Sunny, Moon  } from '@element-plus/icon
 import { h, ref, type VNode } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDark, useToggle } from '@vueuse/core';
-
+import UserInfo from './TopBarComp/UserInfo.vue';
 const router = useRouter()
 
 const isDark = useDark();
@@ -90,7 +83,8 @@ router.afterEach((to, from) => {
 const logo:VNode = h('img',{
     src: './assets/img/Sleepy_Logo.png',
     draggable: false,
-    style:` width:133px;
+    style:  ` 
+            width:133px;
             height:60px;
             `
 })
@@ -98,17 +92,14 @@ const logo:VNode = h('img',{
 const logoDark:VNode = h('img',{
     src: './assets/img/Sleepy_Logo_Dark.png',
     draggable: false,
-    style:` width:133px;
+    style:  ` 
+            width:133px;
             height:60px;
             `
 })
 </script>
 
 <style scoped>
-.user-data{
-    display: flex;
-    margin-right: 20px;
-}
 .title{
     display: flex;
 }
