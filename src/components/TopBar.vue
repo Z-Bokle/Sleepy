@@ -111,7 +111,6 @@ const logoDark:VNode = h('img',{
 }
 .icon{
     margin-right: 16px;
-    margin-top: 8px;
 }
 .setting-text{
     margin-right: 30px;

@@ -3,34 +3,47 @@
     <div class="user-data">
         <el-popover placement="bottom-end">
             <template #reference>
-                <el-avatar @click="userDialogVisible = true"></el-avatar>
+                <el-link type="primary" @click=" !userLogin ? userDialogVisible = true : ''">{{ userGreeting }}</el-link>
             </template>
-            <span>这里展示用户个人信息捏</span>
+            <div>{{ userDesc }}</div>
         </el-popover>
     </div>
 
     <el-dialog v-model="userDialogVisible" :title="tabTexts.title">
         <el-tabs :tab-position="'left'">
-            <el-tab-pane :label="tabTexts.regiser">
-                <register-form :form-texts="tabTexts.formTextsRegister"></register-form>
-            </el-tab-pane>
             <el-tab-pane :label="tabTexts.login">
                 <login-form :form-texts="tabTexts.formTextsLogin"></login-form>
+            </el-tab-pane>
+            <el-tab-pane :label="tabTexts.register">
+                <register-form :form-texts="tabTexts.formTextsRegister"></register-form>
             </el-tab-pane>
         </el-tabs>
     </el-dialog>
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue';
+import { ref, provide, type Ref, computed, onMounted } from 'vue';
 import RegisterForm from './UserInfo/RegisterForm.vue';
 import LoginForm from './UserInfo/LoginForm.vue';
+import { useStore } from 'vuex';
+import axios from 'axios';
+import { ElMessage } from 'element-plus';
 
 const userDialogVisible = ref(false);
 
+const store = useStore()
+// 用户信息描述
+const userDesc = computed(() => store.getters.getUserDesc())
+// 用户问候语
+const userGreeting = computed(() => store.getters.getUserGreeting())
+// 用户登录状态
+const userLogin = computed(() => store.state.account.login)
+
+provide<Ref<Boolean>>('userDialogVisible', userDialogVisible)
+
 const tabTexts = {
     title:'注册 / 登录',
-    regiser:'注册',
+    register:'注册',
     login:'登录',
     formTextsRegister:{
         register:'注册',
@@ -47,6 +60,24 @@ const tabTexts = {
         password:'密码',
     }
 }
+
+// 自动登录
+onMounted(() => {
+    axios({
+        method:'post',
+        url:'/user/check-token'
+    })
+    .then((res) => {
+        if(res.status >= 200 && res.status < 300) {
+            ElMessage(res.data.msg)
+            if(res.data.status === 0) { // 自动登录成功
+                userDialogVisible ? userDialogVisible.value = false : console.log('dialog错误')
+                // 在vuex中记录用户信息
+                store.commit('login',res.data.user)
+            }
+        }
+    })
+})
 
 </script>
 

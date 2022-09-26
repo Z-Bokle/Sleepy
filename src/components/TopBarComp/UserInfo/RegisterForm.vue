@@ -1,5 +1,5 @@
 <template>
-    <el-form :model="form" :rules="rules" label-position="right" label-width="80px">
+    <el-form :model="form" ref="formRef" :rules="rules" label-position="right" label-width="80px">
         <el-form-item :label="props.formTexts.name" prop="name">
             <el-input v-model="form.name" />
         </el-form-item>
@@ -20,15 +20,16 @@
             <el-input v-model="form.againPassword" type="password" show-password />
         </el-form-item>
         <el-form-item>
-            <el-button type="primary">{{ props.formTexts.register }}</el-button>
+            <el-button type="primary" @click="submit(formRef)">{{ props.formTexts.register }}</el-button>
         </el-form-item>
     </el-form>
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive } from 'vue';
+import { reactive, ref, inject, type Ref } from 'vue';
 import axios from 'axios';
-import { useStore } from 'vuex'
+import {ElMessage, type FormInstance} from 'element-plus'
+import qs from 'qs';
 
 interface formTextsType {
     formTexts:{
@@ -40,14 +41,13 @@ interface formTextsType {
         getCode: String,    
         register: String  
     }
-
 }
+
+const userDialogVisible = inject<Ref<Boolean>>('userDialogVisible')
 
 const props = defineProps<formTextsType>()
 
-// vuex中存放url前缀
-const store = useStore()
-const urlPrefix = computed(() => store.state.urlPrefix)
+const formRef = ref<FormInstance>()
 
 const form = reactive({
     name: '',
@@ -101,10 +101,61 @@ const rules = {
     ]
 }
 
-const getCode = (email:string) => {
-    axios.post('/user/code',{'email':email})
+// 获取验证码
+const getCode = (email: string) => {
+    axios({
+        method: 'post',
+        url: '/user/code',
+        data: qs.stringify({'email':email}),
+        headers:{
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
     .then((res) => {
-        console.log(res)
+        if(res.status >= 200 && res.status < 300) {
+            ElMessage(res.data.msg)
+        }
+        else 
+            ElMessage('获取验证码失败')
+    })
+}
+
+// 注册
+const register = (name: string, email: string, code: string, password: string) => {
+    axios({
+        method: 'post',
+        url: '/user/register',
+        data: qs.stringify({
+            'name': name,
+            'email': email,
+            'code': code,
+            'password': password
+        }),
+        headers:{
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+    .then((res) => {
+        if(res.status >= 200 && res.status < 300) {
+            ElMessage(res.data.msg)
+            if(res.data.status === 0) // 注册成功
+                userDialogVisible ? userDialogVisible.value = false : console.log('dialog错误')
+        }
+        else 
+            ElMessage('注册失败')
+    })
+}
+
+// 提交表单
+const submit = (formRef: FormInstance | undefined) => {
+    if(!formRef) return
+    formRef.validate((valid) => {
+        if(valid) {
+            register(form.name,form.email,form.code,form.password)
+        } else {
+            ElMessage('注册信息填写有误!')
+            return false
+        }
     })
 }
 </script>
