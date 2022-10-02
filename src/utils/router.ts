@@ -6,7 +6,8 @@ const routes = [
     {path: '/', component: HomePage},
     {path: '/moviedb', component: MovieDB},
     {path: '/moviedb/details', redirect: '/moviedb'},
-    {path: '/moviedb/details/:movieid', component: MovieDetail}
+    {path: '/moviedb/details/:movieid', component: MovieDetail},
+    {path: '/collections', component:null}
 ]
 
 const router = VueRouter.createRouter({

@@ -21,10 +21,11 @@
 <script lang="ts" setup>
 import { h, type VNode } from 'vue';
 import { 
-    Grid, 
     Star,
-    Collection,
-    Clock,
+    Picture,
+    User,
+    Film,
+    ChatRound
 } from '@element-plus/icons-vue';
 
 interface menuItem {
@@ -49,26 +50,31 @@ const menuItemGroups: menuItemGroup[] = [{
     title: "个性化",
     menuItems: [{
         index: "suggest",
-        text: "推荐",
+        text: "猜你喜欢",
+        icon: h(ChatRound)
+    },
+    {
+        index: "collections",
+        text: "收藏夹",
         icon: h(Star)
     },
     {
-        index: "moviedb",
-        text: "电影数据库",
-        icon: h(Grid)
+        index: "persona",
+        text: "用户画像",
+        icon: h(Picture)
     }]
 },
 {
-    title: "电影数据库",
+    title: "数据检索",
     menuItems: [{
-        index: "like",
-        text: "Like",
-        icon: h(Collection)
+        index: "moviedb",
+        text: "电影数据库",
+        icon: h(Film)
     },
     {
-        index: "recently-play",
-        text: "Recently Play",
-        icon: h(Clock)
+        index: "persondb",
+        text: "影人数据库",
+        icon: h(User)
     }]
 }];
 

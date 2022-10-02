@@ -13,14 +13,14 @@ import { onUpdated, ref } from "vue";
 const currentPage = ref(1);
 onUpdated(() => {
     // 发送ajax请求，获取页码对应的电影信息
-    console.log("page is updated")
+    console.log(`页码更新了，现在应该用ajax请求第${currentPage.value}页`)
 });
 </script>
 
 <style scoped>
     .pages{
         position: absolute;
-        left: 40%;
+        left: 33%;
         bottom: 4%;
     }
     </style>
