@@ -20,7 +20,7 @@ onUpdated(() => {
 <style scoped>
     .pages{
         position: absolute;
-        left: 33%;
+        left: 36vw;
         bottom: 4%;
     }
     </style>

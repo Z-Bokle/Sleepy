@@ -12,10 +12,12 @@ const store = createStore({
                 },
                 // 是否已登录
                 login: false
-            }
+            },
+            title:'' //topbar上的页面标题
         }
     },
     getters: {
+        // 获取用户简介
         getUserDesc: (state) => () => {
             const user = state.account.user
             if(state.account.login === false)
@@ -23,6 +25,7 @@ const store = createStore({
             else
                 return `uid: ${user.uid} \n用户名: ${user.name} \n邮箱: ${user.email}`
         },
+        // 获取用户的问候语
         getUserGreeting: (state) => () => {
             const user = state.account.user
             if(state.account.login === false)
@@ -43,6 +46,9 @@ const store = createStore({
                 name: undefined,
                 email: undefined
             }
+        },
+        setTitle: (state, title) => {
+            state.title = title
         }
     }
 })

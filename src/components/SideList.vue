@@ -27,6 +27,7 @@ import {
     Film,
     ChatRound
 } from '@element-plus/icons-vue';
+import { useRouter } from 'vue-router';
 
 interface menuItem {
     // 菜单项目
@@ -49,17 +50,17 @@ interface menuItemGroup {
 const menuItemGroups: menuItemGroup[] = [{
     title: "个性化",
     menuItems: [{
-        index: "suggest",
+        index: "/suggest",
         text: "猜你喜欢",
         icon: h(ChatRound)
     },
     {
-        index: "collections",
+        index: "/collections",
         text: "收藏夹",
         icon: h(Star)
     },
     {
-        index: "persona",
+        index: "/persona",
         text: "用户画像",
         icon: h(Picture)
     }]
@@ -67,20 +68,21 @@ const menuItemGroups: menuItemGroup[] = [{
 {
     title: "数据检索",
     menuItems: [{
-        index: "moviedb",
+        index: "/moviedb",
         text: "电影数据库",
         icon: h(Film)
     },
     {
-        index: "persondb",
+        index: "/persondb",
         text: "影人数据库",
         icon: h(User)
     }]
 }];
 
-
+const router = useRouter()
 const handleClick = (key: string, keyPath: string[]) => {
     
+    console.log(router.getRoutes())
 }
 
 </script>

@@ -22,7 +22,7 @@
 
             <template #content>
                 <div class="title">
-                    <span>这个是标题</span>
+                    <span>{{ title }}</span>
                 </div>
             </template>
         </el-page-header>
@@ -41,10 +41,11 @@
 
 <script lang="ts" setup>
 import { ArrowLeft, ArrowRight, Setting, Sunny, Moon  } from '@element-plus/icons-vue';
-import { h, ref, type VNode } from 'vue';
+import { computed, h, ref, type VNode } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDark, useToggle } from '@vueuse/core';
 import UserInfo from './TopBarComp/UserInfo.vue';
+import { useStore } from 'vuex';
 const router = useRouter()
 
 const isDark = useDark();
@@ -62,7 +63,6 @@ const clickBack = () => {
     router.back()
 }
 
-
 // 路由后置钩子，在路由改变后触发，用于修改面包屑的内容
 //  TODO 同时用于修改menu的高亮
 router.afterEach((to, from) => {
@@ -79,6 +79,9 @@ router.afterEach((to, from) => {
     links.value[0].part = "主页"
 
 })
+
+const store = useStore()
+const title = computed(() => store.state.title)
 
 const logo:VNode = h('img',{
     src: './assets/img/Sleepy_Logo.png',

@@ -6,11 +6,11 @@ import TopBar from './components/TopBar.vue';
 
 <template>
   <div class="common-layout">
-    <el-container>
+    <el-container class="el-container">
       <el-header class="el-header">
         <top-bar></top-bar>
       </el-header>
-      <el-container>
+      <el-container class="el-container">
         <el-aside width="180px">
           <side-list></side-list>
         </el-aside>
@@ -30,5 +30,12 @@ body {
 
 .el-header {
   margin-top: 20px;
+}
+.common-layout {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>
