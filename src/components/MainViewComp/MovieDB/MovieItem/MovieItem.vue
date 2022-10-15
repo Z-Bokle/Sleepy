@@ -1,11 +1,11 @@
 <template>
-	<el-skeleton style="width:250px; height:420px" :loading="loading" :count="1" animated>
+	<el-skeleton :loading="loading" :count="1" animated>
 		<template #template>
             <movie-item-loading></movie-item-loading>
 		</template>
 		<!-- 加载完成(loading为false)后显示的内容 -->
 		<template #default>
-			<!-- 这里接口完成后采用v-for -->
+			<!-- 这里接口完成后采用v-for整体显示列表 -->
 			<movie-item-loaded 
 			  :img="movieDetails.img"
 			  :name="movieDetails.name"
@@ -28,7 +28,7 @@ import MovieItemLoading from "./MovieItemLoading.vue";
 const router = useRouter();
 const loading = ref(true);
 
-// 接口调通后修改为正式收到的对象
+// 接口调通后修改为数组用于接收对象Array
 const movieDetails = ref({
 	img: '',
 	name: '',
@@ -39,7 +39,8 @@ const movieDetails = ref({
 })
 
 onBeforeMount(() => {
-	// ajax获取电影信息
+	// 修改为使用ajax获取电影信息
+	// 每页项目数12
 	setTimeout(() => {
 		movieDetails.value = {
 			id: 1291543,

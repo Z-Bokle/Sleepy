@@ -13,8 +13,7 @@
             </el-col>
             <el-col :span="14">
                 <el-row :gutter="10">
-                    <el-col :span="12"><span class="title">{{ name }}</span></el-col>
-                    <el-col :span="8" :offset="4"><span class="year">{{ year }}</span></el-col>
+                    <el-col :span="24"><span class="title">{{ name }}</span></el-col>
                 </el-row>
                 <el-row :gutter="10">
                     <el-col :span="24"><div class="desc">{{ desc }}</div></el-col>
@@ -39,7 +38,6 @@ const props = defineProps({
     name: { type: String, required: true },
     // 描述
     desc: { type: String, required: true },
-    year: Number,
     tags: { type: Array<String>, required: true }
 });
 
@@ -69,10 +67,12 @@ const props = defineProps({
 .title {
     font-size: 1.5em;
     font-family: MiSans-SemiBold;
-}
-.year {
-    font-size: 1.5em;
-    font-size: MiSans;
+    
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
 }
 .tag {
     margin-top: 5px;

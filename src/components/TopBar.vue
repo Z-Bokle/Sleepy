@@ -40,16 +40,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ArrowLeft, ArrowRight, Setting, Sunny, Moon  } from '@element-plus/icons-vue';
+import { ArrowLeft, ArrowRight, Setting, Sunny, Moon } from '@element-plus/icons-vue';
 import { computed, h, ref, type VNode } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDark, useToggle } from '@vueuse/core';
 import UserInfo from './TopBarComp/UserInfo.vue';
 import { useStore } from 'vuex';
-const router = useRouter()
 
+const router = useRouter()
 const isDark = useDark();
 const toggleDark = useToggle(isDark)
+const store = useStore()
 
 const drawerVisible = ref(false);
 
@@ -80,7 +81,6 @@ router.afterEach((to, from) => {
 
 })
 
-const store = useStore()
 const title = computed(() => store.state.title)
 
 const logo:VNode = h('img',{

@@ -3,12 +3,16 @@ import HomePage from '../components/MainViewComp/HomePage.vue'
 import MovieDB from '../components/MainViewComp/MovieDB/MovieDB.vue'
 import MovieDetail from '../components/MainViewComp/MovieDetail/MovieDetail.vue'
 import Collections from '@/components/MainViewComp/Collections/Collections.vue'
+import PersonDB from '@/components/MainViewComp/PersonDB/PersonDB.vue';
+
 const routes = [
     {path: '/', component: HomePage},
     {path: '/moviedb', component: MovieDB},
     {path: '/moviedb/details', redirect: '/moviedb'},
     {path: '/moviedb/details/:movieid(\\d+)', component: MovieDetail},
-    {path: '/collections', component: Collections}
+    {path: '/collections', component: Collections},
+    {path: '/persondb', component: PersonDB},
+    {path: '/persondb/details', redirect: '/persondb'},
 ]
 
 const router = VueRouter.createRouter({

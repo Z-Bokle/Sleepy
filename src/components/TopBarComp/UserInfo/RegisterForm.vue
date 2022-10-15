@@ -59,7 +59,6 @@ const form = reactive({
 
 // 检查密码输入的自定义规则
 const checkPassword = (rule: any, value: string, callback: any) => {
-    console.log(value)
     if (value === '') {
         callback(new Error('请输入密码'))
     } else if (!value.match('^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9~!@&%#_]{8,16}$')) {
