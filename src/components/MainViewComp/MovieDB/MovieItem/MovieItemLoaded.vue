@@ -47,6 +47,7 @@ const props = defineProps({
 .card {
     width: 420px;
     height: 240px;
+    margin: 20px 30px 20px 30px;
 }
 .desc {
     overflow: hidden;

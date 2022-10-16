@@ -35,6 +35,7 @@ const props = defineProps({
 .card {
     width: 190px;
     height: 270px;
+    margin: 20px 30px 20px 30px;
 }
 @font-face {
     font-family: 'MiSans';

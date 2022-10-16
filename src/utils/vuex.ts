@@ -13,7 +13,13 @@ const store = createStore({
                 // 是否已登录
                 login: false
             },
-            title:'' //topbar上的页面标题
+            title: '', //topbar上的页面标题
+            movieFilter: {
+                // 电影列表筛选表单
+                movieYear: [1900, (new Date()).getFullYear()],
+                genres: [0].splice(1, 1),
+                countries: [0].splice(1, 1)
+            }
         }
     },
     getters: {
@@ -49,6 +55,14 @@ const store = createStore({
         },
         setTitle: (state, title) => {
             state.title = title
+        },
+        resetMovieFilter: (state) => {
+            state.movieFilter.countries = []
+            state.movieFilter.genres = []
+            state.movieFilter.movieYear = [1900, (new Date()).getFullYear()]
+        },
+        setMovieFilter: (state, filter:{countries: number[], genres: number[], movieYear: [number, number]}) => {
+            state.movieFilter = filter
         }
     }
 })

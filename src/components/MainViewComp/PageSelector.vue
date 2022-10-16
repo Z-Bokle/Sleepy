@@ -36,6 +36,6 @@ const currentPage = computed({
 .pages{
     position: absolute;
     left: 36vw;
-    bottom: 4%;
+    bottom: 3%;
 }
 </style>

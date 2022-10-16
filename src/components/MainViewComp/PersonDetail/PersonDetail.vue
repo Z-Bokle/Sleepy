@@ -78,6 +78,9 @@ import MorePersonDetail from './MorePersonDetail.vue';
 const route = useRoute()
 const store = useStore()
 
+// 标题设置
+store.commit('setTitle', '影人数据库')
+
 const personDetail = ref({
   "id": 1339808,
   "name": "王源 Roy Wang",

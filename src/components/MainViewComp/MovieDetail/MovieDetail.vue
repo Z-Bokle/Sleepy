@@ -94,6 +94,9 @@ const colors = ref(['#99A9BF', '#F7BA2A', '#FF9900'])
 //用于rate组件展示的分数，并非实际分数
 const viewRating = computed(() => movieDetail.value.rating / 2)
 
+// 标题设置
+store.commit('setTitle', '电影数据库')
+
 const movieDetail = ref({
     "id": 1291543,
     "name": "功夫",

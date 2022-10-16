@@ -15,6 +15,7 @@
             
             <template #extra>
                 <div class="extra">
+                    <movie-filter></movie-filter>
                     <el-icon :size="25" class="icon" @click="drawerVisible = true"><setting-one /></el-icon>  
                     <user-info></user-info>
                 </div>
@@ -45,8 +46,9 @@ import { computed, h, ref, type VNode } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDark, useToggle } from '@vueuse/core';
 import UserInfo from './TopBarComp/UserInfo.vue';
+import MovieFilter from './TopBarComp/MovieFilter.vue';
 import { useStore } from 'vuex';
-import { SettingOne, Filter } from '@icon-park/vue-next';
+import { SettingOne } from '@icon-park/vue-next';
 
 const router = useRouter()
 const isDark = useDark();
