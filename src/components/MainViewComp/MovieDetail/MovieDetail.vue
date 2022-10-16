@@ -5,7 +5,8 @@
                 <div class="poster-container" ref="container">
                     <el-image :src="movieDetail.img" referrerpolicy="no-referrer" class="poster" draggable="false" />
                 </div>
-                <div class="like"><like-selector></like-selector></div>
+                <div class="like" v-if="store.state.account.login"><like-selector></like-selector></div>
+                <div class="like" v-else><el-card>请登录后查看喜好</el-card></div>
             </el-col>
             <el-col :span="15">
                 <div class="desc">
@@ -37,7 +38,7 @@
                         <el-descriptions-item label="类型">
                             {{ movieDetail.genre }}
                         </el-descriptions-item>
-                        <el-descriptions-item label="国家">
+                        <el-descriptions-item label="国家/地区">
                             {{ movieDetail.country }}
                         </el-descriptions-item>
                         <el-descriptions-item label="标签" :span="1">
@@ -51,7 +52,7 @@
                             </el-scrollbar>
                         </el-descriptions-item>
                         <el-descriptions-item label="演职员">
-                            <el-scrollbar :always="true">
+                            <el-scrollbar>
                                 <div class="scrollbar-content">
                                     <person-item-mini
                                         v-for="person in persons"
@@ -80,10 +81,12 @@ import { useParallax, useShare } from '@vueuse/core';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { Share } from '@element-plus/icons-vue'
+import { useStore } from 'vuex';
 import PersonItemMini from './PersonItemMini.vue';
 import LikeSelector from './LikeSelector.vue'
 
 const route = useRoute()
+const store = useStore()
 
 // rate组件使用的颜色
 const colors = ref(['#99A9BF', '#F7BA2A', '#FF9900'])
@@ -201,8 +204,7 @@ const posterCSSFilter = computed(() => {
     box-shadow: 5px 5px 2px #999999;
 }
 .like {
-    height: 43vh;
-    
+    height: 40vh;
     margin-top: 8vh;
 }
 .desc {

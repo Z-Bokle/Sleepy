@@ -15,7 +15,7 @@
             
             <template #extra>
                 <div class="extra">
-                    <el-icon :size="25" class="icon" @click="drawerVisible = true"><Setting /></el-icon>  
+                    <el-icon :size="25" class="icon" @click="drawerVisible = true"><setting-one /></el-icon>  
                     <user-info></user-info>
                 </div>
             </template>
@@ -40,12 +40,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ArrowLeft, ArrowRight, Setting, Sunny, Moon } from '@element-plus/icons-vue';
+import { ArrowLeft, ArrowRight, Sunny, Moon } from '@element-plus/icons-vue';
 import { computed, h, ref, type VNode } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDark, useToggle } from '@vueuse/core';
 import UserInfo from './TopBarComp/UserInfo.vue';
 import { useStore } from 'vuex';
+import { SettingOne, Filter } from '@icon-park/vue-next';
 
 const router = useRouter()
 const isDark = useDark();

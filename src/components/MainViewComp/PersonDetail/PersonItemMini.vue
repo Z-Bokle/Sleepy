@@ -2,7 +2,7 @@
     <el-card class="card">
         <el-image :src="props.img" class="img" referrerpolicy="no-referrer" />
         <div class="name">{{ props.name }}</div>
-        <div class="role">{{ roleMap.get(props.role) }}</div>
+        <div class="rate">相似度:{{ props.rate * 100 }}%</div>
     </el-card>
 </template>
 
@@ -17,17 +17,12 @@ const props = defineProps({
         type: String,
         required: true
     },
-    role: {
-        type: String,
+    rate: {
+        type: Number,
         required: true
     }
 })
 
-const roleMap = new Map<String,String>([
-    ['author', '作者'],
-    ['director', '导演'],
-    ['actor', '演员']
-])
 
 </script>
 
@@ -40,7 +35,7 @@ const roleMap = new Map<String,String>([
     font-size: 1em;
     text-align: center;
 }
-.role {
+.rate {
     font-size: 0.8em;
     text-align: center;
 }

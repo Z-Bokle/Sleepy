@@ -1,8 +1,8 @@
 <!-- MovieItem 加载后的展示 -->
 <template>
     <el-card class="card">
-        <el-row :gutter="30">
-            <el-col :span="10">
+        <el-row>
+            <el-col :span="24">
                 <img
                     :src="img"
                     referrerpolicy="no-referrer"
@@ -11,15 +11,11 @@
                 />
                 <!-- referrer policy解决防盗链403问题 -->            
             </el-col>
-            <el-col :span="14">
-                <el-row :gutter="10">
-                    <el-col :span="24"><span class="name">{{ name }}</span></el-col>
-                </el-row>
-                <el-row :gutter="10">
-                    <el-col :span="24"><div class="summary">{{ summary }}</div></el-col>
-                </el-row>
-            </el-col>
         </el-row>
+        <el-row style="margin-top: 10px;">
+            <el-col :span="24"><span class="name">{{ name }}</span></el-col>
+        </el-row>
+
     </el-card>
 </template>
 
@@ -37,16 +33,8 @@ const props = defineProps({
 
 <style scoped>
 .card {
-    width: 420px;
-    height: 240px;
-}
-.summary {
-    overflow: hidden;
-    -webkit-line-clamp: 6;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    margin-top: 30px;
+    width: 190px;
+    height: 270px;
 }
 @font-face {
     font-family: 'MiSans';
@@ -57,7 +45,7 @@ const props = defineProps({
     src: url('../../../../assets/fonts/MiSans-SemiBold.ttf');
 }
 .name {
-    font-size: 1.5em;
+    font-size: 1em;
     font-family: MiSans-SemiBold;
 
     overflow: hidden;

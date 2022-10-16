@@ -3,7 +3,7 @@
     <div class="user-data">
         <el-popover placement="bottom-end">
             <template #reference>
-                <el-link type="primary" @click=" !userLogin ? userDialogVisible = true : ''">{{ userGreeting }}</el-link>
+                <el-link type="primary" @click=" !userLogin ? userDialogVisible = true : () => {}">{{ userGreeting }}</el-link>
             </template>
             <div>{{ userDesc }}</div>
         </el-popover>

@@ -2,7 +2,7 @@
     <el-card shadow="hover">
         <div class="text-content">
             <div class="selector-before" v-if="likeCode === 0">
-                <div class="text">您是否喜欢该电影?</div>
+                <div class="text">您是否喜欢该影人?</div>
                 <div class="icon-between">
                     <el-tooltip content="我喜欢">
                         <el-icon :size="25">
@@ -27,8 +27,8 @@
                 </div>
             </div>
             <div class="selector-after" v-if="likeCode !== 0">
-                <div v-if="likeCode === 1" class="text">您已经将该电影标记为喜欢</div>
-                <div v-else class="text">您已经将该电影标记为不喜欢</div>
+                <div v-if="likeCode === 1" class="text">您已经将该影人标记为喜欢</div>
+                <div v-else class="text">您已经将该影人标记为不喜欢</div>
                 <div class="icon-between">
                     <component :is="likeCode === 1 ? likeIcons.likeFilled : likeIcons.dislikeFilled"></component>
                     <el-tooltip content="重置">
@@ -49,7 +49,7 @@ import { ref, h, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute()
-const movieID = route.params['movieid']
+const personID = route.params['personid']
 
 const likeCode = ref<Number>(0)
 
@@ -68,7 +68,7 @@ const dislikeHover = ref(false)
 const setLikeCode = (code: Number) => {
     axios({
         method: 'post',
-        url: `/movie/${movieID}/like`,
+        url: `/person/${personID}/like`,
         data: {like: code},
         headers: {
         'Content-Type': 'application/json'
@@ -82,7 +82,7 @@ const setLikeCode = (code: Number) => {
 onMounted(() => {
     axios({
         method: 'get',
-        url: `/movie/${movieID}/like`
+        url: `/person/${personID}/like`
     })
     .then((res) => {
         likeCode.value = res.data.like
