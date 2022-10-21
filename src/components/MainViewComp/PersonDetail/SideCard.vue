@@ -1,0 +1,38 @@
+<template>
+<el-card>
+    <el-row :gutter="30">
+        <el-col :span="6">
+            <el-image :src="img" />
+        </el-col>
+        <el-col :span="18">
+            <el-row>
+                <div class="name">{{ name }}</div>
+            </el-row>
+            <el-row>
+                <div class="text">{{ text }}</div>
+            </el-row>
+        </el-col>
+    </el-row>
+</el-card>
+</template>
+
+<script lang="ts" setup>
+const props = defineProps({
+    img: {type: String, required: true},
+    name: {type: String, required: true},
+    text: {type: String, required: true}
+})
+</script>
+
+<style scoped>
+.name {
+    font-size: 1.2em;
+}
+.text {
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+</style>

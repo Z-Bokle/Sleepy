@@ -13,7 +13,6 @@ const store = createStore({
                 // 是否已登录
                 login: false
             },
-            title: '', //topbar上的页面标题
             movieFilter: {
                 // 电影列表筛选表单
                 movieYear: [1900, (new Date()).getFullYear()],
@@ -52,9 +51,6 @@ const store = createStore({
                 name: undefined,
                 email: undefined
             }
-        },
-        setTitle: (state, title) => {
-            state.title = title
         },
         resetMovieFilter: (state) => {
             state.movieFilter.countries = []

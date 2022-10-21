@@ -69,8 +69,8 @@ onMounted(() => {
     })
     .then((res) => {
         if(res.status >= 200 && res.status < 300) {
-            ElMessage(res.data.msg)
             if(res.data.status === 0) { // 自动登录成功
+                ElMessage(res.data.msg)
                 userDialogVisible ? userDialogVisible.value = false : console.log('dialog错误')
                 // 在vuex中记录用户信息
                 store.commit('login',res.data.user)

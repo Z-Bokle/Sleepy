@@ -2,19 +2,17 @@
     <div class="items">
         <person-item v-for="person in persons" :person-detail="person" class="item"></person-item>        
     </div>
-    <page-selector @vnode-updated="updatePage()" v-model="currentPage"></page-selector>
+    <page-selector v-model="currentPage"></page-selector>
 </template>
 
 <script lang="ts" setup>
 import PersonItem from './PersonItem/PersonItem.vue';
 import PageSelector from '../PageSelector.vue';
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore()
 
-// 标题设置
-store.commit('setTitle', '影人数据库')
 
 const currentPage = ref(1);
 
@@ -63,10 +61,12 @@ const persons = ref([
     }
 ])
 
-const updatePage = () => {
+watchEffect(() => {
+    // 自动监听页码变化刷新列表
     // 发送ajax请求，获取页码对应的电影信息
     console.log(`页码更新了，现在应该用ajax请求影人的第${currentPage.value}页`)
-}
+})
+
 
 </script>
 <style scoped>

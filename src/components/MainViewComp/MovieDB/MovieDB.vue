@@ -2,20 +2,17 @@
     <div class="items">
         <movie-item v-for="movie in movies" :movie-detail="movie" class="item"></movie-item>
     </div>
-    <page-selector @vnode-updated="updatePage()" v-model="currentPage"></page-selector>
+    <page-selector v-model="currentPage"></page-selector>
 
 </template>
 
 <script lang="ts" setup>
 import MovieItem from "./MovieItem/MovieItem.vue";
 import PageSelector from '../PageSelector.vue';
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore()
-
-// 标题设置
-store.commit('setTitle', '电影数据库')
 
 const currentPage = ref(1);
 
@@ -70,12 +67,12 @@ const movies = ref([
     }
 ])
 
-const updatePage = () => {
-    // 重新加载MovieItem的数据
-    // 其他筛选参数从vuex中获取
-    console.log(`页码更新了，现在应该用ajax请求电影的第${currentPage.value}页`)
-
-}
+watchEffect(() => {
+    // 自动监听currentPage 以及 state.movieFilter
+    // 完成自动刷新列表
+    console.log(store.state.movieFilter)
+    console.log(`页码或列表更新了，现在应该用ajax请求电影的第${currentPage.value}页`)
+})
 
 </script>
 <style scoped>

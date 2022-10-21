@@ -1,7 +1,7 @@
 <template>
     <div style="display:flex;">
         <div class="logo">
-            <component :is="isDark ? logo : logoDark"></component>
+            <component :is="logo"></component>
         </div>
 
         <el-page-header :icon="ArrowLeft" :title="'返回'" @back="clickBack" class="header">
@@ -23,7 +23,7 @@
 
             <template #content>
                 <div class="title">
-                    <span>{{ title }}</span>
+                    <span>{{ route.meta.title }}</span>
                 </div>
             </template>
         </el-page-header>
@@ -43,17 +43,19 @@
 <script lang="ts" setup>
 import { ArrowLeft, ArrowRight, Sunny, Moon } from '@element-plus/icons-vue';
 import { computed, h, ref, type VNode } from 'vue';
-import { useRouter } from 'vue-router';
-import { useDark, useToggle } from '@vueuse/core';
+import { useRouter, useRoute } from 'vue-router';
+import { useDark, useToggle, useFavicon } from '@vueuse/core';
 import UserInfo from './TopBarComp/UserInfo.vue';
 import MovieFilter from './TopBarComp/MovieFilter.vue';
-import { useStore } from 'vuex';
 import { SettingOne } from '@icon-park/vue-next';
 
 const router = useRouter()
-const isDark = useDark();
+const route = useRoute()
+const isDark = useDark()
 const toggleDark = useToggle(isDark)
-const store = useStore()
+
+const favicon = computed(() => isDark.value ? './assets/img/Sleepy_Moon.png' : './assets/img/Sleepy_Moon_Dark.png')
+useFavicon(favicon)
 
 const drawerVisible = ref(false);
 
@@ -68,7 +70,7 @@ const clickBack = () => {
 }
 
 // 路由后置钩子，在路由改变后触发，用于修改面包屑的内容
-//  TODO 同时用于修改menu的高亮
+// TODO 同时用于修改menu的高亮
 router.afterEach((to, from) => {
     console.log(to.fullPath)
     let parts = to.fullPath.split('/')
@@ -84,24 +86,11 @@ router.afterEach((to, from) => {
 
 })
 
-const title = computed(() => store.state.title)
-
-const logo:VNode = h('img',{
-    src: './assets/img/Sleepy_Logo.png',
+const logo = computed(() => {
+    return h('img',{
+    src: isDark.value ? './assets/img/Sleepy_Logo.png' : './assets/img/Sleepy_Logo_Dark.png',
     draggable: false,
-    style:  ` 
-            width:133px;
-            height:60px;
-            `
-})
-
-const logoDark:VNode = h('img',{
-    src: './assets/img/Sleepy_Logo_Dark.png',
-    draggable: false,
-    style:  ` 
-            width:133px;
-            height:60px;
-            `
+    style:  'width:133px;height:60px;'})
 })
 </script>
 

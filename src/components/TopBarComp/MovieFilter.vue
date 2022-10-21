@@ -1,6 +1,6 @@
 <template>
     <el-icon :size="25" v-if="route.fullPath === '/moviedb'" @click="drawerVisible = true" class="icon"><Filter /></el-icon>  
-    <el-drawer v-model="drawerVisible" direction="ttb" size="50%" title="电影筛选" @open="init()">
+    <el-drawer v-model="drawerVisible" direction="ttb" size="60%" title="电影筛选" @open="init()">
         <el-form label-width="100px" label-position="left">
             <el-form-item label="国家/地区">
                 <el-select
@@ -145,15 +145,13 @@ const init = () => {
 }
 
 const reset = () => {
-    store.commit('resetMovieFilter')
     drawerVisible.value = false
-    // 重新加载MovieItem的数据
+    store.commit('resetMovieFilter') // 重置vuex中的表单信息
 }
 
 const confirm = () => {
-    store.commit('setMovieFilter', form.value)
     drawerVisible.value = false
-    // 重新加载MovieItem的数据
+    store.commit('setMovieFilter', form.value) // 设置vuex中的表单信息
 }
 
 </script>
