@@ -2,19 +2,20 @@
     <div class="items">
         <movie-item v-for="movie in movies" :movie-detail="movie" class="item"></movie-item>
     </div>
-    <page-selector v-model="currentPage"></page-selector>
+    <page-selector v-model="currentPage" :page-count="30"></page-selector>
 
 </template>
 
 <script lang="ts" setup>
 import MovieItem from "./MovieItem/MovieItem.vue";
 import PageSelector from '../PageSelector.vue';
-import { ref, watchEffect } from "vue";
+import { computed, onMounted, ref, watch, watchEffect } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore()
 
 const currentPage = ref(1);
+
 
 const movies = ref([
     {
@@ -67,12 +68,14 @@ const movies = ref([
     }
 ])
 
-watchEffect(() => {
+watch(() => [store.state.movieFilter,currentPage], (now, before) => {
     // 自动监听currentPage 以及 state.movieFilter
     // 完成自动刷新列表
-    console.log(store.state.movieFilter)
-    console.log(`页码或列表更新了，现在应该用ajax请求电影的第${currentPage.value}页`)
-})
+    // 注意输入page-count
+    console.log(now[0])
+    console.log(`页码或列表更新了，现在应该用ajax请求电影的第${now[1].value}页`)
+}, {deep: true})
+
 
 </script>
 <style scoped>

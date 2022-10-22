@@ -2,7 +2,7 @@
     <div class="items">
         <person-item v-for="person in persons" :person-detail="person" class="item"></person-item>        
     </div>
-    <page-selector v-model="currentPage"></page-selector>
+    <page-selector v-model="currentPage" :page-count="30"></page-selector>
 </template>
 
 <script lang="ts" setup>
@@ -64,8 +64,10 @@ const persons = ref([
 watchEffect(() => {
     // 自动监听页码变化刷新列表
     // 发送ajax请求，获取页码对应的电影信息
+    // 注意输入page-count
     console.log(`页码更新了，现在应该用ajax请求影人的第${currentPage.value}页`)
 })
+
 
 
 </script>

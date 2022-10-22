@@ -1,6 +1,6 @@
 <template>
     <el-icon :size="25" v-if="route.fullPath === '/moviedb'" @click="drawerVisible = true" class="icon"><Filter /></el-icon>  
-    <el-drawer v-model="drawerVisible" direction="ttb" size="60%" title="电影筛选" @open="init()">
+    <el-drawer v-model="drawerVisible" direction="ttb" size="65%" title="电影筛选" @open="init()">
         <el-form label-width="100px" label-position="left">
             <el-form-item label="国家/地区">
                 <el-select
@@ -16,6 +16,7 @@
                         />
                 </el-select>
             </el-form-item>
+
             <el-form-item label="类型">
                 <el-select
                     v-model="form.genres"
@@ -30,7 +31,17 @@
                         />
                 </el-select>
             </el-form-item>
-            <el-form-item label="年份">
+
+            <el-form-item label="排序方式">
+                <el-radio-group v-model="form.sortby">
+                    <el-radio-button label="default">默认</el-radio-button>
+                    <el-radio-button label="rate">评分最高</el-radio-button>
+                    <el-radio-button label="yeardnc">年份最早</el-radio-button>
+                    <el-radio-button label="yeariec">年份最晚</el-radio-button>
+                </el-radio-group>
+            </el-form-item>
+
+            <el-form-item label="年份区间">
                 <el-slider v-model="form.movieYear" range show-stops :min="1900" :max="(new Date()).getFullYear()" :marks="marks" />
             </el-form-item>
         </el-form>
@@ -131,17 +142,20 @@ axios({
 const form = ref<{
     countries: number[], 
     genres: number[],
-    movieYear: [number, number]
+    movieYear: [number, number],
+    sortby: string
 }>({
     countries: store.state.movieFilter.countries,
     genres: store.state.movieFilter.genres,
-    movieYear: store.state.movieFilter.movieYear
+    movieYear: store.state.movieFilter.movieYear,
+    sortby: store.state.movieFilter.sortby
 })
 
 const init = () => {
     form.value.countries = store.state.movieFilter.countries
     form.value.genres = store.state.movieFilter.genres,
     form.value.movieYear = store.state.movieFilter.movieYear
+    form.value.sortby = store.state.movieFilter.sortby
 }
 
 const reset = () => {

@@ -2,7 +2,7 @@
     <el-pagination 
     background 
     layout="prev, pager, next" 
-    :page-count="30" 
+    :page-count="pageCount" 
     class="pages" 
     v-model:current-page="currentPage" 
     />
@@ -14,7 +14,8 @@ import { computed } from 'vue';
 // 使用计算属性、自定义事件和参数定义一个v-model参数
 
 const props = defineProps({
-    modelValue: {type: Number, required: true}
+    modelValue: {type: Number, required: true},
+    pageCount: {type: Number, required: true}
 })
 
 const emits = defineEmits<{

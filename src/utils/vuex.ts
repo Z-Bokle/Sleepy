@@ -16,8 +16,9 @@ const store = createStore({
             movieFilter: {
                 // 电影列表筛选表单
                 movieYear: [1900, (new Date()).getFullYear()],
-                genres: [0].splice(1, 1),
-                countries: [0].splice(1, 1)
+                genres: [],
+                countries: [],
+                sortby: 'default'
             }
         }
     },
@@ -56,9 +57,14 @@ const store = createStore({
             state.movieFilter.countries = []
             state.movieFilter.genres = []
             state.movieFilter.movieYear = [1900, (new Date()).getFullYear()]
+            state.movieFilter.sortby = 'default'
         },
-        setMovieFilter: (state, filter:{countries: number[], genres: number[], movieYear: [number, number]}) => {
-            state.movieFilter = filter
+        setMovieFilter: (state, filter) => {
+            // 浅拷贝，为了防止watch的deep直接监听到filter而非state.movieFilter
+            state.movieFilter.countries = filter.countries
+            state.movieFilter.genres = filter.genres
+            state.movieFilter.movieYear = filter.movieYear
+            state.movieFilter.sortby = filter.sortby
         }
     }
 })

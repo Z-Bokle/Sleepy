@@ -42,7 +42,7 @@
 
 <script lang="ts" setup>
 import { ArrowLeft, ArrowRight, Sunny, Moon } from '@element-plus/icons-vue';
-import { computed, h, ref, type VNode } from 'vue';
+import { computed, h, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useDark, useToggle, useFavicon } from '@vueuse/core';
 import UserInfo from './TopBarComp/UserInfo.vue';
