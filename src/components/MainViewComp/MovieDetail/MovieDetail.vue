@@ -84,6 +84,7 @@ import { Share } from '@element-plus/icons-vue'
 import { useStore } from 'vuex';
 import PersonItemMini from './PersonItemMini.vue';
 import LikeSelector from './LikeSelector.vue'
+import axios from 'axios';
 
 const route = useRoute()
 const store = useStore()
@@ -94,75 +95,40 @@ const colors = ref(['#99A9BF', '#F7BA2A', '#FF9900'])
 //用于rate组件展示的分数，并非实际分数
 const viewRating = computed(() => movieDetail.value.rating / 2)
 
-const movieDetail = ref({
-    "id": 1291543,
-    "name": "功夫",
-    "year": 2004,
-    "rating": 8.3,
-    "img": "https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2219011938.webp",
-    "tags": [
-        "周星驰",
-        "喜剧",
-        "香港",
-        "功夫",
-        "动作",
-        "香港电影",
-        "搞笑",
-        "经典"
-    ],
-    "desc": "1940年代的上海，自小受尽欺辱的街头混混阿星（周星驰）为了能出人头地，可谓窥见机会的缝隙就往里钻，今次他盯上行动日益猖獗的黑道势力“斧头帮”，想借之大名成就大业。阿星假冒“斧头帮”成员试图在一个叫“猪笼城寨”的地方对居民敲诈，不想引来真的“斧头帮”与“猪笼城寨”居民的恩怨。“猪笼城寨”原是藏龙卧虎之处，居民中有许多身怀绝技者（元华、梁小龙等），他们隐藏于此本是为远离江湖恩怨，不想麻烦自动上身，躲都躲不及。而在观战正邪两派的斗争中，阿星逐渐领悟功夫的真谛。",
-    "genre": null,
-    "country": null    
-})
+const movieDetail = ref()
 
-const persons = ref([
-    {
-        name: '冯小刚',
-        img: 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p45667.webp',
-        role: 'director'
-    },
-    {
-        name: '冯小刚',
-        img: 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p45667.webp',
-        role: 'director'
-    },
-    {
-        name: '冯小刚',
-        img: 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p45667.webp',
-        role: 'director'
-    },
-    {
-        name: '冯小刚',
-        img: 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p45667.webp',
-        role: 'director'
-    },
-    {
-        name: '冯小刚',
-        img: 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p45667.webp',
-        role: 'director'
-    },
-    {
-        name: '冯小刚',
-        img: 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p45667.webp',
-        role: 'director'
-    },
-    {
-        name: '冯小刚',
-        img: 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p45667.webp',
-        role: 'director'
-    },
-    {
-        name: '冯小刚',
-        img: 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p45667.webp',
-        role: 'director'
-    },
-])
+const persons = ref<{
+    name: string;
+    img: string;
+    role: string;
+}[]>([])
 
 onMounted(() => {
     // 从路由中获取的字段
     const movieID = route.params['movieid']
     // ajax从服务端获取details和persons
     
+    axios({
+        method: 'get',
+        url: `/movie/${movieID}/details`,
+    })
+    .then((res) => {
+        movieDetail.value = res.data.data
+    })
+
+    axios({
+        method: 'get',
+        url: `/movie/${movieID}/persons`
+    })
+    .then((res) => {
+        let array = res.data.data
+        persons.value.push({
+            name: array.person.name,
+            img: array.person.img,
+            role: array.role
+        })
+    })
+
 })
 
 // 分享功能

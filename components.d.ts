@@ -7,7 +7,6 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    Collections: typeof import('./src/components/MainViewComp/Collections/Collections.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
     ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
@@ -50,9 +49,6 @@ declare module '@vue/runtime-core' {
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTag: typeof import('element-plus/es')['ElTag']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
-    HomePage: typeof import('./src/components/MainViewComp/HomePage.vue')['default']
-    LikeSelector: typeof import('./src/components/MainViewComp/MovieDetail/LikeSelector.vue')['default']
-    LoginForm: typeof import('./src/components/TopBarComp/UserInfo/LoginForm.vue')['default']
     MainView: typeof import('./src/components/MainView.vue')['default']
     MainViewCompCollectionsCollections: typeof import('./src/components/MainViewComp/Collections/Collections.vue')['default']
     MainViewCompHomePage: typeof import('./src/components/MainViewComp/HomePage.vue')['default']
@@ -73,21 +69,6 @@ declare module '@vue/runtime-core' {
     MainViewCompPersonDetailPersonDetail: typeof import('./src/components/MainViewComp/PersonDetail/PersonDetail.vue')['default']
     MainViewCompPersonDetailPersonItemMini: typeof import('./src/components/MainViewComp/PersonDetail/PersonItemMini.vue')['default']
     MainViewCompPersonDetailSideCard: typeof import('./src/components/MainViewComp/PersonDetail/SideCard.vue')['default']
-    MorePersonDetail: typeof import('./src/components/MainViewComp/PersonDetail/MorePersonDetail.vue')['default']
-    MovieDB: typeof import('./src/components/MainViewComp/MovieDB/MovieDB.vue')['default']
-    MovieDetail: typeof import('./src/components/MainViewComp/MovieDetail/MovieDetail.vue')['default']
-    MovieFilter: typeof import('./src/components/TopBarComp/MovieFilter.vue')['default']
-    MovieItem: typeof import('./src/components/MainViewComp/MovieDB/MovieItem/MovieItem.vue')['default']
-    MovieItemLoaded: typeof import('./src/components/MainViewComp/MovieDB/MovieItem/MovieItemLoaded.vue')['default']
-    MovieItemLoading: typeof import('./src/components/MainViewComp/MovieDB/MovieItem/MovieItemLoading.vue')['default']
-    PageSelector: typeof import('./src/components/MainViewComp/PageSelector.vue')['default']
-    PersonDB: typeof import('./src/components/MainViewComp/PersonDB/PersonDB.vue')['default']
-    PersonDetail: typeof import('./src/components/MainViewComp/PersonDetail/PersonDetail.vue')['default']
-    PersonItem: typeof import('./src/components/MainViewComp/PersonDB/PersonItem/PersonItem.vue')['default']
-    PersonItemLoaded: typeof import('./src/components/MainViewComp/PersonDB/PersonItem/PersonItemLoaded.vue')['default']
-    PersonItemLoading: typeof import('./src/components/MainViewComp/PersonDB/PersonItem/PersonItemLoading.vue')['default']
-    PersonItemMini: typeof import('./src/components/MainViewComp/MovieDetail/PersonItemMini.vue')['default']
-    RegisterForm: typeof import('./src/components/TopBarComp/UserInfo/RegisterForm.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SideList: typeof import('./src/components/SideList.vue')['default']
@@ -96,6 +77,5 @@ declare module '@vue/runtime-core' {
     TopBarCompUserInfo: typeof import('./src/components/TopBarComp/UserInfo.vue')['default']
     TopBarCompUserInfoLoginForm: typeof import('./src/components/TopBarComp/UserInfo/LoginForm.vue')['default']
     TopBarCompUserInfoRegisterForm: typeof import('./src/components/TopBarComp/UserInfo/RegisterForm.vue')['default']
-    UserInfo: typeof import('./src/components/TopBarComp/UserInfo.vue')['default']
   }
 }

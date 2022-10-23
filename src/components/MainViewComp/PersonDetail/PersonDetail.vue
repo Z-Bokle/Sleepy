@@ -74,20 +74,12 @@ import { useStore } from 'vuex';
 import LikeSelector from './LikeSelector.vue';
 import PersonItemMini from './PersonItemMini.vue';
 import MorePersonDetail from './MorePersonDetail.vue';
+import axios from 'axios';
 
 const route = useRoute()
 const store = useStore()
 
-
-const personDetail = ref({
-  "id": 1339808,
-  "name": "王源 Roy Wang",
-  "sex": "男",
-  "birthday": "2000/11/8",
-  "birthplace": "中国,重庆",
-  "summary": "王源，2000年11月8日生于中国重庆，中国内地男歌手、演员、主持人，TFBOYS成员。2011年底成为TF家族练习生，2013年8月6日以组合形式出道。2015年，14岁的王源开始独立作词作曲，参演电影《爵迹》、电视剧《青云志》饰演少年张小凡。2016年，首支原创单曲《因为遇见你》播放量破3亿、微博转发量破4亿，获第9届城市至尊音乐榜年度听众最爱新人，2016亚洲新歌榜年度十大金曲。2017年，王源原创单曲《十七》，获央视全球中文音乐榜上榜年度最佳原创歌手与年度最佳中文歌曲。迄今为止，王源已有10首个人单曲。2017年，王源出任“联合国儿童基金会青年教育使者”，两度参加联合国经济与社会理事会青年论坛并英文演讲，是首位受邀联合国青年论坛的中国艺人，也是首位登上联合国世界舞台的中国少年偶像；同年，王源入选美国《时代》周刊全球最具影响青少年30位之一，也是唯一入选的中国00后；10月，出演第五代导演王小帅指导的文艺片电影《地久天长》；11月，成立“源公益专项基金”。2018年，王源领衔主演玄幻传奇古装大IP电视剧《大主宰》，饰演男主角牧尘，该剧将于2019年播出；3月，受Chopard萧邦邀请出席于巴塞尔国际钟表珠宝展举办的“可持续发展的奢侈品之路”新闻发布会和讨论会，随后成为Chopard萧邦全球最年轻品牌大使；5月，受官方赞助的双品牌邀请出席戛纳电影节，红毯着装入选“2018年戛纳电影节最佳红毯着装”；8月，王源作为主演之一正式加入《极限特工4》团队，电影将于2019年1月开拍。",
-  "img": "https://img3.doubanio.com/view/celebrity/s_ratio_celebrity/public/p1535447147.41.webp"
-});
+const personDetail = ref();
 
 // 分享功能
 const shareOptions = {
@@ -96,7 +88,11 @@ const shareOptions = {
     url: route.fullPath
 }
 
-const persons = ref([
+const persons = ref<{
+    name: string;
+    img: string;
+    rate: number;
+}[]>([
     {
         name: '冯小刚',
         img: 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p45667.webp',
@@ -128,7 +124,17 @@ const shareTool = useShare(shareOptions)
 const doShare = () => shareTool.share().catch(err => err)
 
 onMounted(() => {
-    //ajax获取相似影人
+    const personID = route.params['personid']
+
+    axios({
+        method: 'get',
+        url: `/person/${personID}/details`,
+    })
+    .then((res) => {
+        personDetail.value = res.data.data
+    })
+
+    //ajax获取相似影人,即persons
 })
 
 </script>

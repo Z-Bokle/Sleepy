@@ -29,7 +29,7 @@ const store = createStore({
             if(state.account.login === false)
                 return `未登录`
             else
-                return `uid: ${user.uid} \n用户名: ${user.name} \n邮箱: ${user.email}`
+                return `uid: ${user.uid} 用户名: ${user.name} 邮箱: ${user.email}`
         },
         // 获取用户的问候语
         getUserGreeting: (state) => () => {

@@ -49,6 +49,11 @@ const rules = {
     ]
 }
 
+const reset = (formRef: FormInstance | undefined) => {
+    if(!formRef) return
+    formRef.resetFields()
+}
+
 const login = (email: string, password: string) => {
     axios({
         method: 'post',
@@ -65,6 +70,7 @@ const login = (email: string, password: string) => {
         if(res.status >= 200 && res.status < 300) {
             ElMessage(res.data.msg)
             if(res.data.status === 0) { //登录成功
+                reset(formRef.value)
                 userDialogVisible ? userDialogVisible.value = false : console.log('dialog错误')
                 // 在vuex中记录用户信息
                 store.commit('login',res.data.user)

@@ -100,6 +100,12 @@ const rules = {
     ]
 }
 
+// 重置表单
+const reset = (formRef: FormInstance | undefined) => {
+    if(!formRef) return
+    formRef.resetFields()
+}
+
 // 获取验证码
 const getCode = (email: string) => {
     axios({
@@ -138,12 +144,14 @@ const register = (name: string, email: string, code: string, password: string) =
         if(res.status >= 200 && res.status < 300) {
             ElMessage(res.data.msg)
             if(res.data.status === 0) // 注册成功
+                reset(formRef.value)
                 userDialogVisible ? userDialogVisible.value = false : console.log('dialog错误')
         }
         else 
             ElMessage('注册失败')
     })
 }
+
 
 // 提交表单
 const submit = (formRef: FormInstance | undefined) => {

@@ -84,26 +84,15 @@ const marks = ref<Record<number, string>>({
     2030: '2030',
 })
 
-const countries = ref([
-    {
-        value: 1,
-        label: '国家1'
-    },
-    {
-        value: 2,
-        label: '国家2'
-    }
-])
-const genres = ref([
-    {
-        value: 2,
-        label: '类型2'
-    },
-    {
-        value: 3,
-        label: '类型3'
-    }
-])
+const countries = ref<{
+    value: number;
+    label: string;
+}[]>([])
+
+const genres = ref<{
+    value: number;
+    label: string;
+}[]>([])
 
 // 从接口获取所有键值对
 axios({
