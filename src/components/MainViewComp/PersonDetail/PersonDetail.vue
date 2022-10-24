@@ -17,8 +17,8 @@
                                 type="plain" 
                                 :icon="Share"
                                 circle 
-                                :disabled="!shareTool.isSupported"
-                                @click="doShare()"
+                                :disabled="!isSupported"
+                                @click="share(shareOptions)"
                                 class="share-button"
                                 />
                         </template>
@@ -94,6 +94,7 @@ const shareOptions = {
     text: `为你推荐一位影人，名叫${personDetail.value.name}`,
     url: route.fullPath
 }
+const { isSupported, share } = useShare()
 
 const persons = ref<{
     name: string;
@@ -126,9 +127,6 @@ const persons = ref<{
         rate: 0.94
     }
 ])
-
-const shareTool = useShare(shareOptions)
-const doShare = () => shareTool.share().catch(err => err)
 
 onMounted(() => {
     const personID = route.params['personid']

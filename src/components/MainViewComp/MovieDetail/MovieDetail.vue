@@ -17,8 +17,8 @@
                                 type="plain" 
                                 :icon="Share"
                                 circle 
-                                :disabled="!shareTool.isSupported"
-                                @click="doShare()"
+                                :disabled="!isSupported"
+                                @click="share(shareOptions)"
                                 class="share-button"
                                 />
                         </template>
@@ -36,10 +36,10 @@
                             <span class="rate-text">{{ movieDetail.rating }}分</span>
                         </el-descriptions-item>
                         <el-descriptions-item label="类型">
-                            {{ movieDetail.genre }}
+                            {{ movieDetail.genre.join('/') }}
                         </el-descriptions-item>
                         <el-descriptions-item label="国家/地区">
-                            {{ movieDetail.country }}
+                            {{ movieDetail.country.name }}
                         </el-descriptions-item>
                         <el-descriptions-item label="标签" :span="1">
                             <el-tag v-for="tag in movieDetail.tags" class="tag">{{ tag }}</el-tag>
@@ -103,7 +103,7 @@ const movieDetail = ref({
     tags: [''],
     desc: '',
     genre: [{id: 0, name: ''}],
-    country: [{id: 0, name: ''}]
+    country: {id: 0, name: ''}
 })
 
 const persons = ref<{
@@ -146,8 +146,7 @@ const shareOptions = {
     text: `为你推荐一部评分为${movieDetail.value.rating}的电影 ${movieDetail.value.name}!`,
     url: route.fullPath
 }
-const shareTool = useShare(shareOptions)
-const doShare = () => shareTool.share().catch(err => err)
+const { isSupported, share } = useShare()
 
 // 海报放大动效
 const container = ref(null)
