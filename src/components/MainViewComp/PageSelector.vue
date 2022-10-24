@@ -1,7 +1,7 @@
 <template>
     <el-pagination 
     background 
-    layout="prev, pager, next" 
+    layout="prev, pager, next, jumper" 
     :page-count="pageCount" 
     class="pages" 
     v-model:current-page="currentPage" 
@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 // 使用计算属性、自定义事件和参数定义一个v-model参数
 

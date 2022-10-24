@@ -26,7 +26,7 @@
                     </el-tooltip>
                 </div>
             </div>
-            <div class="selector-after" v-if="likeCode !== 0">
+            <div class="selector-after" v-else>
                 <div v-if="likeCode === 1" class="text">您已经将该影人标记为喜欢</div>
                 <div v-else class="text">您已经将该影人标记为不喜欢</div>
                 <div class="icon-between">
