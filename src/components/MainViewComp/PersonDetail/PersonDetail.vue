@@ -79,7 +79,14 @@ import axios from 'axios';
 const route = useRoute()
 const store = useStore()
 
-const personDetail = ref();
+const personDetail = ref({
+    name: '',
+    img: '',
+    sex: '',
+    birthday: '',
+    birthplace: '',
+    summary: ''
+});
 
 // 分享功能
 const shareOptions = {

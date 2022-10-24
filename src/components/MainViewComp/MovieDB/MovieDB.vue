@@ -12,6 +12,7 @@ import PageSelector from '../PageSelector.vue';
 import { computed, onMounted, ref, watch, watchEffect } from "vue";
 import { useStore } from "vuex";
 import axios from "axios";
+import { ElMessage } from "element-plus";
 
 const store = useStore()
 
@@ -28,6 +29,30 @@ const movies = ref<{
     desc: string;
 }[]>()
 
+// 初次获取数据
+
+axios({
+    method: 'get',
+    url: '/movie/list',
+    params: {
+        page: currentPage.value,
+        size: 12,
+        sortby: store.state.movieFilter.sortby,
+        genre: store.state.movieFilter.genres,
+        country: store.state.movieFilter.countries,
+        syear: store.state.movieFilter.movieYear[0],
+        eyear: store.state.movieFilter.movieYear[1]
+    }
+})
+.then((res) => {
+    if (res.data.status === 0) {
+        movies.value = res.data.data.list
+        pageCount.value = res.data.data.total
+    } else {
+        ElMessage(res.data.msg)
+    }
+})
+
 watch(() => [store.state.movieFilter,currentPage], (now, before) => {
     // 自动监听currentPage 以及 state.movieFilter
     // 完成自动刷新列表
@@ -43,13 +68,17 @@ watch(() => [store.state.movieFilter,currentPage], (now, before) => {
             genre: now[0].genres,
             country: now[0].countries,
             syear: now[0].movieYear[0],
-            eyaer: now[0].movieYear[1]
+            eyear: now[0].movieYear[1]
         }
     })
     .then((res) => {
+    if (res.data.status === 0) {
         movies.value = res.data.data.list
         pageCount.value = res.data.data.total
-    })
+    } else {
+        ElMessage(res.data.msg)
+    }
+})
 }, {deep: true})
 
 

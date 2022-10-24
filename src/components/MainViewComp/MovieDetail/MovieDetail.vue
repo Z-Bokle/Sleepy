@@ -95,7 +95,16 @@ const colors = ref(['#99A9BF', '#F7BA2A', '#FF9900'])
 //用于rate组件展示的分数，并非实际分数
 const viewRating = computed(() => movieDetail.value.rating / 2)
 
-const movieDetail = ref()
+const movieDetail = ref({
+    name: '',
+    img: '',
+    year: 0,
+    rating: 0,
+    tags: [''],
+    desc: '',
+    genre: [{id: 0, name: ''}],
+    country: [{id: 0, name: ''}]
+})
 
 const persons = ref<{
     name: string;

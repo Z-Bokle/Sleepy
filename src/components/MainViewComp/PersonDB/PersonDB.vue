@@ -10,6 +10,7 @@ import PersonItem from './PersonItem/PersonItem.vue';
 import PageSelector from '../PageSelector.vue';
 import { ref, watchEffect } from "vue";
 import axios from 'axios';
+import { ElMessage } from 'element-plus';
 
 const pageCount = ref(30);
 
@@ -33,8 +34,12 @@ watchEffect(() => {
         }
     })
     .then((res) => {
-        pageCount.value = res.data.data.total
-        persons.value = res.data.data.list
+        if(res.data.status === 0) {
+            pageCount.value = res.data.data.total
+            persons.value = res.data.data.list            
+        } else {
+            ElMessage(res.data.msg)
+        }
     })
 })
 
