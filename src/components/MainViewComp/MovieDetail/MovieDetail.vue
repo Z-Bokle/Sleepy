@@ -36,10 +36,10 @@
                             <span class="rate-text">{{ movieDetail.rating }}分</span>
                         </el-descriptions-item>
                         <el-descriptions-item label="类型">
-                            {{ movieDetail.genre.join('/') }}
+                            {{ genres }}
                         </el-descriptions-item>
                         <el-descriptions-item label="国家/地区">
-                            {{ movieDetail.country.name }}
+                            {{ countrires }}
                         </el-descriptions-item>
                         <el-descriptions-item label="标签" :span="1">
                             <el-tag v-for="tag in movieDetail.tags" class="tag">{{ tag }}</el-tag>
@@ -59,6 +59,7 @@
                                         :name="person.name"
                                         :img="person.img"
                                         :role="person.role"
+                                        :id="person.id"
                                         class="scrollbar-item"
                                     >
                                     </person-item-mini>
@@ -103,13 +104,26 @@ const movieDetail = ref({
     tags: [''],
     desc: '',
     genre: [{id: 0, name: ''}],
-    country: {id: 0, name: ''}
+    country: [{id: 0, name: ''}]
+})
+
+const genres = computed(() => {
+    let array:Array<string> = [];
+    movieDetail.value.genre.forEach((element) => array.push(element.name))
+    return array.join('/')
+})
+
+const countrires = computed(() => {
+    let array:Array<string> = [];
+    movieDetail.value.country.forEach((element) => array.push(element.name))
+    return array.join('/')
 })
 
 const persons = ref<{
     name: string;
     img: string;
     role: string;
+    id: number;
 }[]>([])
 
 onMounted(() => {
@@ -131,11 +145,15 @@ onMounted(() => {
     })
     .then((res) => {
         let array = res.data.data
-        persons.value.push({
-            name: array.person.name,
-            img: array.person.img,
-            role: array.role
-        })
+        array.forEach((element: { person: { name: any; img: any; id: number }; role: any; }) => {
+            persons.value.push({
+                name: element.person.name,
+                img: element.person.img,
+                role: element.role,
+                id: element.person.id
+            })            
+        });
+
     })
 
 })

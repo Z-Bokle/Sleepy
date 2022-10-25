@@ -9,7 +9,8 @@
         <el-form-item :label="props.formTexts.code" prop="code">
             <el-input v-model="form.code">
                 <template #append>
-                    <el-button @click="getCode(form.email)">{{ props.formTexts.getCode }}</el-button>
+                    <el-button @click="getCode(form.email)" v-if="getCodeDelay === 0">{{ props.formTexts.getCode }}</el-button>
+                    <el-button v-else :disabled="true">{{ `请${getCodeDelay}秒后重试` }}</el-button>
                 </template>
             </el-input>
         </el-form-item>
@@ -26,7 +27,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, inject, type Ref } from 'vue';
+import { reactive, ref, inject, type Ref, watchEffect } from 'vue';
 import axios from 'axios';
 import {ElMessage, type FormInstance} from 'element-plus'
 import qs from 'qs';
@@ -42,6 +43,13 @@ interface formTextsType {
         register: String  
     }
 }
+
+const getCodeDelay = ref(0)
+
+watchEffect(() => {
+    if(getCodeDelay.value > 0)
+        setTimeout(() => getCodeDelay.value--, 1000)
+})
 
 const userDialogVisible = inject<Ref<Boolean>>('userDialogVisible')
 
@@ -108,6 +116,7 @@ const reset = (formRef: FormInstance | undefined) => {
 
 // 获取验证码
 const getCode = (email: string) => {
+    getCodeDelay.value = 60
     axios({
         method: 'post',
         url: '/user/code',
