@@ -6,6 +6,8 @@
                 <el-select
                     v-model="form.countries"
                     multiple
+                    filterable 
+                    :multiple-limit="3"
                     placeholder="请选择国家/地区"
                 >
                     <el-option 
@@ -21,6 +23,8 @@
                 <el-select
                     v-model="form.genres"
                     multiple
+                    filterable 
+                    :multiple-limit="3"
                     placeholder="请选择类型"
                 >
                     <el-option 

@@ -85,7 +85,7 @@ watch(() => [store.state.movieFilter,currentPage], (now, before) => {
 </script>
 <style scoped>
 .items {
-    max-height: 68vh;
+    max-height: 70vh;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;

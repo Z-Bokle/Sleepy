@@ -74,8 +74,12 @@ declare module '@vue/runtime-core' {
     SideList: typeof import('./src/components/SideList.vue')['default']
     TopBar: typeof import('./src/components/TopBar.vue')['default']
     TopBarCompMovieFilter: typeof import('./src/components/TopBarComp/MovieFilter.vue')['default']
+    TopBarCompSearchBox: typeof import('./src/components/TopBarComp/SearchBox.vue')['default']
     TopBarCompUserInfo: typeof import('./src/components/TopBarComp/UserInfo.vue')['default']
     TopBarCompUserInfoLoginForm: typeof import('./src/components/TopBarComp/UserInfo/LoginForm.vue')['default']
     TopBarCompUserInfoRegisterForm: typeof import('./src/components/TopBarComp/UserInfo/RegisterForm.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }

@@ -12,9 +12,10 @@
                     </el-breadcrumb-item>
                 </el-breadcrumb>
             </template>
-            
+
             <template #extra>
                 <div class="extra">
+                    <search-box></search-box>
                     <movie-filter></movie-filter>
                     <el-icon :size="25" class="icon" @click="drawerVisible = true"><setting-one /></el-icon>  
                     <user-info></user-info>
@@ -48,6 +49,7 @@ import { useDark, useToggle, useFavicon } from '@vueuse/core';
 import UserInfo from './TopBarComp/UserInfo.vue';
 import MovieFilter from './TopBarComp/MovieFilter.vue';
 import { SettingOne } from '@icon-park/vue-next';
+import SearchBox from './TopBarComp/SearchBox.vue';
 
 const router = useRouter()
 const route = useRoute()
