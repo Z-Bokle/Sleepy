@@ -34,6 +34,7 @@ declare module '@vue/runtime-core' {
     ElOption: typeof import('element-plus/es')['ElOption']
     ElPageHeader: typeof import('element-plus/es')['ElPageHeader']
     ElPagination: typeof import('element-plus/es')['ElPagination']
+    ElPopconfirm: typeof import('element-plus/es')['ElPopconfirm']
     ElPopover: typeof import('element-plus/es')['ElPopover']
     ElRadioButton: typeof import('element-plus/es')['ElRadioButton']
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
@@ -50,7 +51,8 @@ declare module '@vue/runtime-core' {
     ElTag: typeof import('element-plus/es')['ElTag']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     MainView: typeof import('./src/components/MainView.vue')['default']
-    MainViewCompCollectionsCollections: typeof import('./src/components/MainViewComp/Collections/Collections.vue')['default']
+    MainViewCompCollectionsMovieCollections: typeof import('./src/components/MainViewComp/Collections/MovieCollections.vue')['default']
+    MainViewCompCollectionsPersonCollections: typeof import('./src/components/MainViewComp/Collections/PersonCollections.vue')['default']
     MainViewCompHomePage: typeof import('./src/components/MainViewComp/HomePage.vue')['default']
     MainViewCompMovieDBMovieDB: typeof import('./src/components/MainViewComp/MovieDB/MovieDB.vue')['default']
     MainViewCompMovieDBMovieItemMovieItem: typeof import('./src/components/MainViewComp/MovieDB/MovieItem/MovieItem.vue')['default']
@@ -80,6 +82,6 @@ declare module '@vue/runtime-core' {
     TopBarCompUserInfoRegisterForm: typeof import('./src/components/TopBarComp/UserInfo/RegisterForm.vue')['default']
   }
   export interface ComponentCustomProperties {
-    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
+    vInfiniteScroll: typeof import('element-plus/es')['ElInfiniteScroll']
   }
 }

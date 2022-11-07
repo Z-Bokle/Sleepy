@@ -1,7 +1,7 @@
 <template>
     <div style="display:flex;">
         <div class="logo">
-            <component :is="logo"></component>
+            <component :is="logo" @click="router.push('/')"></component>
         </div>
 
         <el-page-header :icon="ArrowLeft" :title="'返回'" @back="clickBack" class="header">
@@ -17,7 +17,7 @@
                 <div class="extra">
                     <search-box></search-box>
                     <movie-filter></movie-filter>
-                    <el-icon :size="25" class="icon" @click="drawerVisible = true"><setting-one /></el-icon>  
+                    <el-tooltip content="设置"><el-icon :size="25" class="icon" @click="drawerVisible = true"><setting-one /></el-icon></el-tooltip>
                     <user-info></user-info>
                 </div>
             </template>

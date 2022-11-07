@@ -1,8 +1,8 @@
 <template>
-<el-card>
+<el-card @click="jump">
     <el-row :gutter="30">
         <el-col :span="6">
-            <el-image :src="img" />
+            <el-image :src="img" referrerpolicy="no-referrer" />
         </el-col>
         <el-col :span="18">
             <el-row>
@@ -17,11 +17,22 @@
 </template>
 
 <script lang="ts" setup>
+import { useRouter } from 'vue-router';
+
 const props = defineProps({
     img: {type: String, required: true},
     name: {type: String, required: true},
-    text: {type: String, required: true}
+    text: {type: String, required: true},
+    id: {type: Number, required: true},
+    categories: {type: String, required: true}
 })
+
+const router = useRouter()
+
+const jump = () => {
+    router.push(`/${props.categories}db/details/${props.id}`)
+}
+
 </script>
 
 <style scoped>

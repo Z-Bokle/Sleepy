@@ -28,6 +28,7 @@ import {
     ChatRound
 } from '@element-plus/icons-vue';
 import { useRouter } from 'vue-router';
+import { PersonalCollection as PersonLike, Movie as MovieLike } from '@icon-park/vue-next';
 
 interface menuItem {
     // 菜单项目
@@ -55,11 +56,6 @@ const menuItemGroups: menuItemGroup[] = [{
         icon: h(ChatRound)
     },
     {
-        index: "/collections",
-        text: "收藏夹",
-        icon: h(Star)
-    },
-    {
         index: "/persona",
         text: "用户画像",
         icon: h(Picture)
@@ -76,6 +72,19 @@ const menuItemGroups: menuItemGroup[] = [{
         index: "/persondb",
         text: "影人数据库",
         icon: h(User)
+    }]
+},
+{
+    title: "收藏夹",
+    menuItems: [{
+        index: "/collections/movie",
+        text: "电影收藏夹",
+        icon: h(MovieLike)
+    },
+    {
+        index: "/collections/person",
+        text: "影人收藏夹",
+        icon: h(PersonLike)
     }]
 }];
 

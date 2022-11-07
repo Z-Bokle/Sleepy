@@ -1,5 +1,5 @@
 <template>
-    <el-icon :size="25" v-if="route.fullPath === '/moviedb'" @click="drawerVisible = true" class="icon"><Filter /></el-icon>  
+    <el-tooltip content="筛选"><el-icon :size="25" v-if="route.fullPath === '/moviedb'" @click="drawerVisible = true" class="icon"><Filter /></el-icon></el-tooltip>  
     <el-drawer v-model="drawerVisible" direction="ttb" size="65%" title="电影筛选" @open="init()">
         <el-form label-width="100px" label-position="left">
             <el-form-item label="国家/地区">

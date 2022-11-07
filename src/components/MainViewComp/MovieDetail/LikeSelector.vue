@@ -45,7 +45,7 @@
 <script lang="ts" setup>
 import { Like, DislikeTwo, Undo } from "@icon-park/vue-next";
 import axios from "axios";
-import { ref, h, computed, onMounted } from "vue";
+import { ref, h, computed, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute()
@@ -89,6 +89,15 @@ onMounted(() => {
     })
 })
 
+watch(route, (to, from) => {
+    axios({
+        method: 'get',
+        url: `/movie/${movieID}/like`
+    })
+    .then((res) => {
+        likeCode.value = res.data.like
+    })
+})
 </script>
 
 <style scoped>

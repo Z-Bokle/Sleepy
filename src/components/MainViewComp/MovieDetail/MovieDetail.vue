@@ -79,7 +79,7 @@
 
 <script lang="ts" setup>
 import { useParallax, useShare } from '@vueuse/core';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { Share } from '@element-plus/icons-vue'
 import { useStore } from 'vuex';
@@ -127,6 +127,39 @@ const persons = ref<{
 }[]>([])
 
 onMounted(() => {
+    // 从路由中获取的字段
+    const movieID = route.params['movieid']
+    // ajax从服务端获取details和persons
+    
+    axios({
+        method: 'get',
+        url: `/movie/${movieID}/details`,
+    })
+    .then((res) => {
+        movieDetail.value = res.data.data
+    })
+
+    axios({
+        method: 'get',
+        url: `/movie/${movieID}/persons`
+    })
+    .then((res) => {
+        let array = res.data.data
+        array.forEach((element: { person: { name: any; img: any; id: number }; role: any; }) => {
+            persons.value.push({
+                name: element.person.name,
+                img: element.person.img,
+                role: element.role,
+                id: element.person.id
+            })            
+        });
+
+    })
+
+})
+
+// 解决同一路由下跳转不发生改变的问题
+watch(route, (to, from) => {
     // 从路由中获取的字段
     const movieID = route.params['movieid']
     // ajax从服务端获取details和persons

@@ -66,7 +66,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { Share } from '@element-plus/icons-vue'
 import { useShare } from '@vueuse/core';
@@ -129,6 +129,20 @@ const persons = ref<{
 ])
 
 onMounted(() => {
+    const personID = route.params['personid']
+
+    axios({
+        method: 'get',
+        url: `/person/${personID}/details`,
+    })
+    .then((res) => {
+        personDetail.value = res.data.data
+    })
+
+    //ajax获取相似影人,即persons
+})
+
+watch(route, (to, from) => {
     const personID = route.params['personid']
 
     axios({

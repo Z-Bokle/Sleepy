@@ -1,11 +1,11 @@
 <template>
-    <el-popover trigger="click" placement="bottom-end" width="550px" class="icon" @before-enter="searchText = ''">
+    <el-popover trigger="click" placement="bottom-end" width="550px" class="icon" @before-enter="searchText = ''" v-if="route.fullPath === '/moviedb' || route.fullPath === '/persondb'" >
         <template #reference>
             <el-icon :size="25" class="icon">
                 <search />
             </el-icon>
         </template>
-        <el-input v-model="searchText" v-show="route.fullPath === '/moviedb' || route.fullPath === '/persondb'" size="large" class="search">
+        <el-input v-model="searchText" size="large" class="search">
             <template #prepend>
                 <span v-if="route.fullPath === '/moviedb'">搜索电影</span>
                 <span v-else>搜索影人</span>
