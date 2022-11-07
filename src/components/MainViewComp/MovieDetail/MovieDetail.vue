@@ -70,7 +70,9 @@
                 </div>
             </el-col>
             <el-col :span="5">
-                <div class="similar">相似</div>
+                <div class="similar">
+                    <side-card v-for="item in similars" :id="item.id" :img="item.img" :name="item.name" :text="item.desc" class="sidecard"></side-card>
+                </div>
             </el-col>
         </el-row>
     </div>
@@ -80,11 +82,12 @@
 <script lang="ts" setup>
 import { useParallax, useShare } from '@vueuse/core';
 import { computed, onMounted, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { onBeforeRouteLeave, useRoute } from 'vue-router';
 import { Share } from '@element-plus/icons-vue'
 import { useStore } from 'vuex';
 import PersonItemMini from './PersonItemMini.vue';
 import LikeSelector from './LikeSelector.vue'
+import SideCard from './SideCard.vue';
 import axios from 'axios';
 
 const route = useRoute()
@@ -106,6 +109,13 @@ const movieDetail = ref({
     genre: [{id: 0, name: ''}],
     country: [{id: 0, name: ''}]
 })
+
+const similars = ref<{
+    id: number, 
+    name: string, 
+    img: string, 
+    desc: string
+}[]>([])
 
 const genres = computed(() => {
     let array:Array<string> = [];
@@ -156,10 +166,27 @@ onMounted(() => {
 
     })
 
+    axios({
+        method: 'get',
+        url: `/movie/${movieID}/similar`
+    })
+    .then((res) => {
+        let array = res.data.data
+        array.forEach((element: { id: number; name: string; img: string; desc: string; }) => {
+            similars.value.push({
+                id: element.id, 
+                name: element.name, 
+                img: element.img, 
+                desc: element.desc
+            })
+        });
+    })
+
 })
 
 // 解决同一路由下跳转不发生改变的问题
-watch(route, (to, from) => {
+onBeforeRouteLeave((to, from) => {
+    if(to.name !== 'MovieDetail') return
     // 从路由中获取的字段
     const movieID = route.params['movieid']
     // ajax从服务端获取details和persons
@@ -237,7 +264,7 @@ const posterCSSFilter = computed(() => {
 }
 .similar {
     height: 100%;
-    background-color: lightgreen;
+
 }
 @font-face {
     font-family: 'MiSans';
@@ -279,5 +306,8 @@ const posterCSSFilter = computed(() => {
 .share-button {
     margin-left: 20px;
     margin-bottom: 20px;
+}
+.sidecard {
+    margin-top: 10px;
 }
 </style>

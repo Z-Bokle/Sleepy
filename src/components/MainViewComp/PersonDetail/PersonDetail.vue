@@ -67,7 +67,7 @@
 
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { onBeforeRouteLeave, useRoute } from 'vue-router';
 import { Share } from '@element-plus/icons-vue'
 import { useShare } from '@vueuse/core';
 import { useStore } from 'vuex';
@@ -142,7 +142,8 @@ onMounted(() => {
     //ajax获取相似影人,即persons
 })
 
-watch(route, (to, from) => {
+onBeforeRouteLeave((to, from) => {
+    if(to.name !== 'PersonDetail') return
     const personID = route.params['personid']
 
     axios({

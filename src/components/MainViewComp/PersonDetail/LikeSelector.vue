@@ -46,7 +46,7 @@
 import { Like, DislikeTwo, Undo } from "@icon-park/vue-next";
 import axios from "axios";
 import { ref, h, computed, onMounted, watch } from "vue";
-import { useRoute } from "vue-router";
+import { onBeforeRouteLeave, useRoute } from "vue-router";
 
 const route = useRoute()
 const personID = route.params['personid']
@@ -89,7 +89,8 @@ onMounted(() => {
     })
 })
 
-watch(route, (to, from) => {
+onBeforeRouteLeave((to, from) => {
+    if(to.name !== 'PersonDetail') return
     axios({
         method: 'get',
         url: `/person/${personID}/like`

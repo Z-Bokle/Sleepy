@@ -40,8 +40,8 @@
                 <el-radio-group v-model="form.sortby">
                     <el-radio-button label="default">默认</el-radio-button>
                     <el-radio-button label="rate">评分最高</el-radio-button>
-                    <el-radio-button label="yeardnc">年份最早</el-radio-button>
-                    <el-radio-button label="yeariec">年份最晚</el-radio-button>
+                    <el-radio-button label="yearinc">年份最早</el-radio-button>
+                    <el-radio-button label="yeardec">年份最晚</el-radio-button>
                 </el-radio-group>
             </el-form-item>
 
