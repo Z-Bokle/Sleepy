@@ -15,7 +15,7 @@
 <script lang="ts" setup>
 import axios from 'axios';
 import { onMounted, ref, watch } from 'vue';
-import { onBeforeRouteLeave, useRoute } from 'vue-router';
+import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import SideCard from './SideCard.vue';
 
 const active = ref()
@@ -80,7 +80,7 @@ const handleChange = (activeName: string) => {
     }
 }
 
-onBeforeRouteLeave((to, from) => {
+onBeforeRouteUpdate((to, from) => {
     if(to.name !== 'PersonDetail') return
     lists.value.latest = []
     lists.value.top = []

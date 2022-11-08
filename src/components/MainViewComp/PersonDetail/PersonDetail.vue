@@ -22,23 +22,28 @@
                                 class="share-button"
                                 />
                         </template>
-                        <el-descriptions-item label="性别" :span="1">
+                        <el-descriptions-item :span="1">
+                            <template #label><span class="label">性别</span></template>
                             {{ personDetail.sex }}
                         </el-descriptions-item>
-                        <el-descriptions-item label="生日" :span="1">
+                        <el-descriptions-item :span="1">
+                            <template #label><span class="label">生日</span></template>
                             {{ personDetail.birthday }}
                         </el-descriptions-item>
-                        <el-descriptions-item label="出生地" :span="1">
+                        <el-descriptions-item :span="1">
+                            <template #label><span class="label">出生地</span></template>
                             {{ personDetail.birthplace }}
                         </el-descriptions-item>    
-                        <el-descriptions-item label="概述" :span="3">
+                        <el-descriptions-item :span="3">
+                            <template #label><span class="label">概述</span></template>
                             <el-scrollbar :always="true">
                                 <div class="summary-text">
                                     {{ personDetail.summary }}
                                 </div>                                
                             </el-scrollbar>
                         </el-descriptions-item>     
-                        <el-descriptions-item label="相似影人">
+                        <el-descriptions-item>
+                            <template #label><span class="label">相似影人</span></template>
                             <el-scrollbar>
                                 <div class="scrollbar-content">
                                     <person-item-mini
@@ -46,6 +51,7 @@
                                         :name="person.name"
                                         :img="person.img"
                                         :rate="person.rate"
+                                        :id="person.id"
                                         class="scrollbar-item"
                                     >
                                     </person-item-mini>
@@ -67,7 +73,7 @@
 
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue';
-import { onBeforeRouteLeave, useRoute } from 'vue-router';
+import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from 'vue-router';
 import { Share } from '@element-plus/icons-vue'
 import { useShare } from '@vueuse/core';
 import { useStore } from 'vuex';
@@ -100,31 +106,37 @@ const persons = ref<{
     name: string;
     img: string;
     rate: number;
+    id: number;
 }[]>([
     {
         name: '冯小刚',
         img: 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p45667.webp',
-        rate: 0.98
+        rate: 0.98,
+        id: 1000001
     },
     {
         name: '冯小刚',
         img: 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p45667.webp',
-        rate: 0.97
+        rate: 0.97,
+        id: 1000001
     },
     {
         name: '冯小刚',
         img: 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p45667.webp',
-        rate: 0.96
+        rate: 0.96,
+        id: 1000001
     },
     {
         name: '冯小刚',
         img: 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p45667.webp',
-        rate: 0.95
+        rate: 0.95,
+        id: 1000001
     },
     {
         name: '冯小刚',
         img: 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p45667.webp',
-        rate: 0.94
+        rate: 0.94,
+        id: 1000001
     }
 ])
 
@@ -142,13 +154,12 @@ onMounted(() => {
     //ajax获取相似影人,即persons
 })
 
-onBeforeRouteLeave((to, from) => {
+onBeforeRouteUpdate((to, from) => {
     if(to.name !== 'PersonDetail') return
-    const personID = route.params['personid']
 
     axios({
         method: 'get',
-        url: `/person/${personID}/details`,
+        url: `/person/${to.params['personid']}/details`,
     })
     .then((res) => {
         personDetail.value = res.data.data
@@ -204,5 +215,9 @@ onBeforeRouteLeave((to, from) => {
     display: flex;
     flex-shrink: 0;
     margin-left: 10px;
+}
+.label {
+    font-size: 1.2em;
+    font-weight: 600;
 }
 </style>

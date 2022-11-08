@@ -49,7 +49,7 @@ import { useDark, useToggle, useFavicon } from '@vueuse/core';
 import UserInfo from './TopBarComp/UserInfo.vue';
 import MovieFilter from './TopBarComp/MovieFilter.vue';
 import { SettingOne } from '@icon-park/vue-next';
-import SearchBox from './TopBarComp/SearchBox.vue';
+import SearchBox from './TopBarComp/Search/SearchBox.vue';
 
 const router = useRouter()
 const route = useRoute()

@@ -1,10 +1,10 @@
 <template>
 <el-card @click="jump">
-    <el-row :gutter="30">
-        <el-col :span="6">
+    <el-row :gutter="20">
+        <el-col :span="8">
             <el-image :src="img" referrerpolicy="no-referrer" />
         </el-col>
-        <el-col :span="18">
+        <el-col :span="16">
             <el-row>
                 <div class="name">{{ name }}</div>
             </el-row>
@@ -45,5 +45,7 @@ const jump = () => {
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
+    
+    margin-top: 15px;
 }
 </style>

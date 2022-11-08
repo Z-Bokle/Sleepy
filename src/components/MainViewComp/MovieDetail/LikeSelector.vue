@@ -45,8 +45,9 @@
 <script lang="ts" setup>
 import { Like, DislikeTwo, Undo } from "@icon-park/vue-next";
 import axios from "axios";
+import { ElMessage } from "element-plus";
 import { ref, h, computed, onMounted, watch } from "vue";
-import { onBeforeRouteLeave, useRoute } from "vue-router";
+import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from "vue-router";
 
 const route = useRoute()
 const movieID = route.params['movieid']
@@ -76,6 +77,7 @@ const setLikeCode = (code: Number) => {
     })
     .then((res) => {
         if(res.data.status === 0) likeCode.value = code;
+        else ElMessage(res.data.msg)
     })
 }
 
@@ -85,18 +87,24 @@ onMounted(() => {
         url: `/movie/${movieID}/like`
     })
     .then((res) => {
-        likeCode.value = res.data.like
+        if(res.data.status === 0)
+            likeCode.value = res.data.like
+        else
+            ElMessage(res.data.msg)
     })
 })
 
-onBeforeRouteLeave((to, from) => {
+onBeforeRouteUpdate((to, from) => {
     if(to.name !== 'MovieDetail') return
     axios({
         method: 'get',
-        url: `/movie/${movieID}/like`
+        url: `/movie/${to.params['movieid']}/like`
     })
     .then((res) => {
-        likeCode.value = res.data.like
+        if(res.data.status === 0)
+            likeCode.value = res.data.like
+        else
+            ElMessage(res.data.msg)
     })
 })
 </script>

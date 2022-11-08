@@ -1,10 +1,10 @@
 <template>
 <el-card @click="jump">
-    <el-row :gutter="30">
-        <el-col :span="6">
+    <el-row :gutter="5">
+        <el-col :span="10">
             <el-image :src="img" referrerpolicy="no-referrer" />
         </el-col>
-        <el-col :span="18">
+        <el-col :span="14">
             <el-row>
                 <div class="name">{{ name }}</div>
             </el-row>
@@ -36,13 +36,22 @@ const jump = () => {
 
 <style scoped>
 .name {
-    font-size: 1.2em;
+    font-size: 0.9em;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
 }
 .text {
+    font-size: 0.7em;
     overflow: hidden;
     -webkit-line-clamp: 3;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
+
+    margin-top: 10px;
 }
+
 </style>

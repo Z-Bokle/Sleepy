@@ -34,6 +34,10 @@ export default defineConfig({
       '/movie': {
         target: 'http://1.15.186.76/',
         changeOrigin: true
+      },
+      '/user': {
+        target: 'http://1.15.186.76/',
+        changeOrigin: true
       }
     }
   }

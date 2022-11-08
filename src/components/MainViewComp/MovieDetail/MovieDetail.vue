@@ -25,7 +25,8 @@
                         <template #extra>
                             <span class="year">{{ movieDetail.year }}</span>
                         </template>
-                        <el-descriptions-item label="评分" :min-width="200">
+                        <el-descriptions-item :min-width="200">
+                            <template #label><span class="label">评分</span></template>
                             <el-rate
                                 v-model="viewRating"
                                 size="large"
@@ -35,23 +36,28 @@
                             />
                             <span class="rate-text">{{ movieDetail.rating }}分</span>
                         </el-descriptions-item>
-                        <el-descriptions-item label="类型">
+                        <el-descriptions-item>
+                            <template #label><span class="label">类型</span></template>
                             {{ genres }}
                         </el-descriptions-item>
-                        <el-descriptions-item label="国家/地区">
+                        <el-descriptions-item>
+                            <template #label><span class="label">国家/地区</span></template>
                             {{ countrires }}
                         </el-descriptions-item>
-                        <el-descriptions-item label="标签" :span="1">
+                        <el-descriptions-item :span="1">
+                            <template #label><span class="label">标签</span></template>
                             <el-tag v-for="tag in movieDetail.tags" class="tag">{{ tag }}</el-tag>
                         </el-descriptions-item>
-                        <el-descriptions-item label="简介" :span="2">
+                        <el-descriptions-item :span="2">
+                            <template #label><span class="label">简介</span></template>
                             <el-scrollbar :always="true">
                                 <div class="desc-text">
                                     {{ movieDetail.desc }}
                                 </div>                                
                             </el-scrollbar>
                         </el-descriptions-item>
-                        <el-descriptions-item label="演职员">
+                        <el-descriptions-item>
+                            <template #label><span class="label">演职员</span></template>
                             <el-scrollbar>
                                 <div class="scrollbar-content">
                                     <person-item-mini
@@ -71,6 +77,7 @@
             </el-col>
             <el-col :span="5">
                 <div class="similar">
+                    <span class="label">相似电影</span>
                     <side-card v-for="item in similars" :id="item.id" :img="item.img" :name="item.name" :text="item.desc" class="sidecard"></side-card>
                 </div>
             </el-col>
@@ -82,7 +89,7 @@
 <script lang="ts" setup>
 import { useParallax, useShare } from '@vueuse/core';
 import { computed, onMounted, ref, watch } from 'vue';
-import { onBeforeRouteLeave, useRoute } from 'vue-router';
+import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import { Share } from '@element-plus/icons-vue'
 import { useStore } from 'vuex';
 import PersonItemMini from './PersonItemMini.vue';
@@ -185,15 +192,13 @@ onMounted(() => {
 })
 
 // 解决同一路由下跳转不发生改变的问题
-onBeforeRouteLeave((to, from) => {
+onBeforeRouteUpdate((to, from) => {
     if(to.name !== 'MovieDetail') return
-    // 从路由中获取的字段
-    const movieID = route.params['movieid']
     // ajax从服务端获取details和persons
     
     axios({
         method: 'get',
-        url: `/movie/${movieID}/details`,
+        url: `/movie/${to.params['movieid']}/details`,
     })
     .then((res) => {
         movieDetail.value = res.data.data
@@ -201,10 +206,11 @@ onBeforeRouteLeave((to, from) => {
 
     axios({
         method: 'get',
-        url: `/movie/${movieID}/persons`
+        url: `/movie/${to.params['movieid']}/persons`
     })
     .then((res) => {
         let array = res.data.data
+        persons.value = []
         array.forEach((element: { person: { name: any; img: any; id: number }; role: any; }) => {
             persons.value.push({
                 name: element.person.name,
@@ -213,9 +219,24 @@ onBeforeRouteLeave((to, from) => {
                 id: element.person.id
             })            
         });
-
     })
 
+    axios({
+        method: 'get',
+        url: `/movie/${to.params['movieid']}/similar`
+    })
+    .then((res) => {
+        let array = res.data.data
+        similars.value = []
+        array.forEach((element: { id: number; name: string; img: string; desc: string; }) => {
+            similars.value.push({
+                id: element.id, 
+                name: element.name, 
+                img: element.img, 
+                desc: element.desc
+            })
+        });
+    })
 })
 
 // 分享功能
@@ -309,5 +330,9 @@ const posterCSSFilter = computed(() => {
 }
 .sidecard {
     margin-top: 10px;
+}
+.label {
+    font-size: 1.2em;
+    font-weight: 600;
 }
 </style>
