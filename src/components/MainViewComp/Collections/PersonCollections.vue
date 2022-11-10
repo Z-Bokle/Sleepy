@@ -19,8 +19,7 @@
                         </el-popconfirm>
                     </el-col>
                 </el-row>
-                
-                <el-image :src="item.img" />
+                <el-row><el-image :src="item.img" referrerpolicy="no-referrer" class="img" /></el-row>
             </el-card>
         </li>
     </ul>  
@@ -46,13 +45,13 @@ interface DisplayStruct {
     nextPage: number // 下一页页码
 }
 
-interface Movie {
+interface Person {
     id: number,
     name: string,
     img: string,
 }
 
-const likeList = ref<Movie[]>([])
+const likeList = ref<Person[]>([])
 
 // 喜欢列表
 const like = ref<DisplayStruct>({
@@ -67,6 +66,7 @@ const likeLoad = () => {
         ElMessage("您未登录,请先登录")
         return
     }
+    if(like.value.loading) return // 上一次加载还未完成
     like.value.loading = true
     /*
     1. 设置loading
@@ -87,11 +87,11 @@ const likeLoad = () => {
     .then((res) => {
         if(res.data.status === 0) {
             let array = res.data.data.list
-            array.forEach((movie: { id: any; name: any; img: any;}) => {
+            array.forEach((person: { id: any; name: any; img: any;}) => {
                 likeList.value.push({
-                    id: movie.id,
-                    name: movie.name,
-                    img: movie.img
+                    id: person.id,
+                    name: person.name,
+                    img: person.img
                 })
             })
             like.value.nextPage++
@@ -118,8 +118,8 @@ const confirm = (personID: number, index: number) => {
         },
     })
     .then((res) => {
-        if(res.status === 0) {
-            likeList.value = likeList.value.splice(index, 1)
+        if(res.data.status === 0) {
+            likeList.value.splice(index, 1)
             ElMessage("修改成功")
         } else {
             ElMessage("修改失败")
@@ -133,13 +133,14 @@ const confirm = (personID: number, index: number) => {
 
 <style scoped>
 .list {
-    height: 70vh;
+    max-height: 70vh;
     list-style: none;
     padding: 0;
 
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+    align-items: flex-start;
 }
 .list-item {
     display: flex;
@@ -148,13 +149,8 @@ const confirm = (personID: number, index: number) => {
 }
 .card {
     height: 270px;
-    width: 190px;
+    width: 180px;
     margin: 20px 30px 20px 30px;
-}
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 .tips {
     width: 80%;
@@ -162,12 +158,22 @@ const confirm = (personID: number, index: number) => {
     position: fixed;
     bottom: 10px;
 }
+@font-face {
+    font-family: 'MiSans';
+    src: url('../../../assets/fonts/MiSans-Normal.ttf');
+}
 .title {
+    font-family: MiSans;
+    font-weight: bold;
+    font-size: 1.1em;
+
     overflow: hidden;
     -webkit-line-clamp: 1;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
 }
-
+.img {
+    margin-top: 10px;
+}
 </style>

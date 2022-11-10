@@ -89,5 +89,6 @@ watch(() => [store.state.movieFilter,currentPage], (now, before) => {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+    align-items: flex-start;
 }
 </style>

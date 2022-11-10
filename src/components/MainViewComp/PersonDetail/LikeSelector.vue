@@ -50,7 +50,7 @@ import { ref, h, computed, onMounted, watch } from "vue";
 import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from "vue-router";
 
 const route = useRoute()
-const personID = route.params['personid']
+const personID = computed(() => {return route.params['movieid']}) 
 
 const likeCode = ref<Number>(0)
 
@@ -69,14 +69,18 @@ const dislikeHover = ref(false)
 const setLikeCode = (code: Number) => {
     axios({
         method: 'post',
-        url: `/person/${personID}/like`,
+        url: `/person/${personID.value}/like`,
         data: {like: code},
         headers: {
         'Content-Type': 'application/json'
         },
     })
     .then((res) => {
-        if(res.data.status === 0) likeCode.value = code;
+        if(res.data.status === 0) {
+            likeCode.value = code;
+            likeHover.value = false;
+            dislikeHover.value = false;
+        }
         else ElMessage(res.data.msg)
     })
 }
@@ -84,7 +88,7 @@ const setLikeCode = (code: Number) => {
 onMounted(() => {
     axios({
         method: 'get',
-        url: `/person/${personID}/like`
+        url: `/person/${personID.value}/like`
     })
     .then((res) => {
         if(res.data.status === 0)
