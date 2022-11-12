@@ -33,10 +33,16 @@
             <template #header>
                 <h1>设置</h1>
             </template>
+            <div>
+                <span class="setting-text">夜间模式</span>
+                <el-switch v-model="isDark" :active-icon="Moon" active-color="#000000" :inactive-icon="Sunny"
+                    inactive-color="#AAAAAA" :inline-prompt="true" size="large" @change="toggleDark" />                
+            </div>
+            <div>
+                <span class="setting-text">搜索结果保留</span>
+                <el-switch disabled size="large" />
+            </div>
 
-            <span class="setting-text">夜间模式</span>
-            <el-switch v-model="isDark" :active-icon="Moon" active-color="#000000" :inactive-icon="Sunny"
-                inactive-color="#AAAAAA" :inline-prompt="true" size="large" @change="toggleDark" />
         </el-drawer>
 
 </template>

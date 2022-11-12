@@ -38,6 +38,10 @@ export default defineConfig({
       '/user': {
         target: 'http://1.15.186.76/',
         changeOrigin: true
+      },
+      '/search': {
+        target: 'http://1.15.186.76/',
+        changeOrigin: true
       }
     }
   }
