@@ -59,6 +59,8 @@ declare module '@vue/runtime-core' {
     MainViewCompMovieDBMovieItemMovieItem: typeof import('./src/components/MainViewComp/MovieDB/MovieItem/MovieItem.vue')['default']
     MainViewCompMovieDBMovieItemMovieItemLoaded: typeof import('./src/components/MainViewComp/MovieDB/MovieItem/MovieItemLoaded.vue')['default']
     MainViewCompMovieDBMovieItemMovieItemLoading: typeof import('./src/components/MainViewComp/MovieDB/MovieItem/MovieItemLoading.vue')['default']
+    MainViewCompMovieDetailCommentCard: typeof import('./src/components/MainViewComp/MovieDetail/CommentCard.vue')['default']
+    MainViewCompMovieDetailComments: typeof import('./src/components/MainViewComp/MovieDetail/Comments.vue')['default']
     MainViewCompMovieDetailLikeSelector: typeof import('./src/components/MainViewComp/MovieDetail/LikeSelector.vue')['default']
     MainViewCompMovieDetailMovieDetail: typeof import('./src/components/MainViewComp/MovieDetail/MovieDetail.vue')['default']
     MainViewCompMovieDetailPersonItemMini: typeof import('./src/components/MainViewComp/MovieDetail/PersonItemMini.vue')['default']

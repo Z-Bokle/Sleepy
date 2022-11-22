@@ -198,7 +198,7 @@ onBeforeRouteUpdate((to, from) => {
     font-family: MiSans-SemiBold;
 }
 .like {
-    height: 40vh;
+    height: 25vh;
     margin-top: 8vh;
 }
 .desc {

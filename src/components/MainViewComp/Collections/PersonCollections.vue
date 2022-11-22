@@ -19,12 +19,12 @@
                         </el-popconfirm>
                     </el-col>
                 </el-row>
-                <el-row><el-image :src="item.img" referrerpolicy="no-referrer" class="img" /></el-row>
+                <el-row><el-image :src="item.img" referrerpolicy="no-referrer" class="img" @click="jump(item.id)" /></el-row>
             </el-card>
         </li>
+        <span v-if="like.loading" class="tips">加载中...</span>
+        <span v-if="like.noMore" class="tips">已经到底了</span>      
     </ul>  
-    <p v-if="like.loading" class="tips">加载中...</p>
-    <p v-if="like.noMore" class="tips">已经到底了</p>      
 </div>
 
 </template>
@@ -35,8 +35,10 @@ import { Delete } from '@icon-park/vue-next';
 import { ElMessage } from 'element-plus';
 import axios from 'axios';
 import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
 const store = useStore()
+const router = useRouter()
 
 // 每一个展示列表的属性
 interface DisplayStruct {
@@ -128,6 +130,9 @@ const confirm = (personID: number, index: number) => {
     
 }
 
+const jump = (id: number) => {
+    router.push(`/persondb/details/${id}`)
+}
 
 </script>
 
@@ -143,7 +148,7 @@ const confirm = (personID: number, index: number) => {
     align-items: flex-start;
 }
 .list-item {
-    display: flex;
+    /* display: flex; */
     align-items: center;
     justify-content: center;
 }
@@ -153,10 +158,9 @@ const confirm = (personID: number, index: number) => {
     margin: 20px 30px 20px 30px;
 }
 .tips {
-    width: 80%;
+    width: 90%;
+    display: inline-flexbox;
     text-align: center;
-    position: fixed;
-    bottom: 10px;
 }
 @font-face {
     font-family: 'MiSans';

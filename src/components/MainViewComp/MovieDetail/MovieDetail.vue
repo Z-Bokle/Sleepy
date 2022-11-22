@@ -21,6 +21,7 @@
                                 @click="share(shareOptions)"
                                 class="share-button"
                                 />
+                                <el-button class="comments-button" :icon="Comment" type="info" @click="show = true">查看优质影评</el-button>
                         </template>
                         <template #extra>
                             <span class="year">{{ movieDetail.year }}</span>
@@ -84,11 +85,12 @@
         </el-row>
     </div>
 
+    <comments v-model="show"></comments>
 </template>
 
 <script lang="ts" setup>
 import { useParallax, useShare } from '@vueuse/core';
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onBeforeMount, onMounted, ref, watch } from 'vue';
 import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import { Share } from '@element-plus/icons-vue'
 import { useStore } from 'vuex';
@@ -96,6 +98,8 @@ import PersonItemMini from './PersonItemMini.vue';
 import LikeSelector from './LikeSelector.vue'
 import SideCard from './SideCard.vue';
 import axios from 'axios';
+import { Comment } from '@icon-park/vue-next';
+import Comments from './Comments.vue';
 
 const route = useRoute()
 const store = useStore()
@@ -143,7 +147,7 @@ const persons = ref<{
     id: number;
 }[]>([])
 
-onMounted(() => {
+onBeforeMount(() => {
     // 从路由中获取的字段
     const movieID = route.params['movieid']
     // ajax从服务端获取details和persons
@@ -259,6 +263,9 @@ const posterCSSFilter = computed(() => {
     return `brightness(${(roll.value + 1)})`
 })
 
+// 是否展示影评窗口
+const show = ref(false)
+
 </script>
 
 <style scoped>
@@ -277,7 +284,7 @@ const posterCSSFilter = computed(() => {
     box-shadow: 5px 5px 2px #999999;
 }
 .like {
-    height: 40vh;
+    height: 25vh;
     margin-top: 8vh;
 }
 .desc {
@@ -334,5 +341,9 @@ const posterCSSFilter = computed(() => {
 .label {
     font-size: 1.2em;
     font-weight: 600;
+}
+.comments-button{
+    margin-left: 20px;
+    margin-bottom: 20px;
 }
 </style>

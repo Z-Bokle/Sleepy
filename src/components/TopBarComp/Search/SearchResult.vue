@@ -44,6 +44,12 @@ const jump = (id: number) => {
     font-weight: bold;
     font-size: 1.4em;
     margin-left: 5px;
+
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
 }
 .extra {
     font-size: 1.2em;

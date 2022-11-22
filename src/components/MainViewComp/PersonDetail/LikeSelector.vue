@@ -50,7 +50,7 @@ import { ref, h, computed, onMounted, watch } from "vue";
 import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from "vue-router";
 
 const route = useRoute()
-const personID = computed(() => {return route.params['movieid']}) 
+const personID = computed(() => {return route.params['personid']}) 
 
 const likeCode = ref<Number>(0)
 

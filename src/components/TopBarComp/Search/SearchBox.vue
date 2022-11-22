@@ -5,7 +5,7 @@
                 <search />
             </el-icon>
         </template>
-        <el-input v-model="searchText" size="large" class="search">
+        <el-input v-model="searchText" size="large" class="search" clearable>
             <template #prepend>
                 <span v-if="route.fullPath === '/moviedb'">搜索电影</span>
                 <span v-else>搜索影人</span>

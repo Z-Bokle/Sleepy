@@ -26,7 +26,7 @@ const persons = ref<{
 watchEffect(() => {
     // 自动监听页码变化刷新列表
     axios({
-        method: 'post',
+        method: 'get',
         url: '/person/list',
         params: {
             page: currentPage.value,

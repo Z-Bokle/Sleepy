@@ -57,7 +57,6 @@ watch(() => [store.state.movieFilter,currentPage], (now, before) => {
     // 自动监听currentPage 以及 state.movieFilter
     // 完成自动刷新列表
     // 注意输入page-count
-    console.log(now[0])
     axios({
         method: 'get',
         url: '/movie/list',
