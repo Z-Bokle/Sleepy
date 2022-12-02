@@ -75,6 +75,8 @@ declare module '@vue/runtime-core' {
     MainViewCompPersonDetailPersonDetail: typeof import('./src/components/MainViewComp/PersonDetail/PersonDetail.vue')['default']
     MainViewCompPersonDetailPersonItemMini: typeof import('./src/components/MainViewComp/PersonDetail/PersonItemMini.vue')['default']
     MainViewCompPersonDetailSideCard: typeof import('./src/components/MainViewComp/PersonDetail/SideCard.vue')['default']
+    MainViewCompSuggestSuggest: typeof import('./src/components/MainViewComp/Suggest/Suggest.vue')['default']
+    MainViewCompSuggestSuggestCard: typeof import('./src/components/MainViewComp/Suggest/SuggestCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SideList: typeof import('./src/components/SideList.vue')['default']

@@ -42,6 +42,10 @@ export default defineConfig({
       '/search': {
         target: 'http://1.15.186.76/',
         changeOrigin: true
+      },
+      '/suggest': {
+        target: 'http://1.15.186.76/',
+        changeOrigin: true
       }
     }
   }

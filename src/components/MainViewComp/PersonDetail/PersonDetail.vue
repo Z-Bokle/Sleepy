@@ -42,22 +42,6 @@
                                 </div>                                
                             </el-scrollbar>
                         </el-descriptions-item>     
-                        <el-descriptions-item>
-                            <template #label><span class="label">相似影人</span></template>
-                            <el-scrollbar>
-                                <div class="scrollbar-content">
-                                    <person-item-mini
-                                        v-for="person in persons"
-                                        :name="person.name"
-                                        :img="person.img"
-                                        :rate="person.rate"
-                                        :id="person.id"
-                                        class="scrollbar-item"
-                                    >
-                                    </person-item-mini>
-                                </div>
-                            </el-scrollbar>
-                        </el-descriptions-item>                    
                     </el-descriptions>
                 </div>
                 
@@ -102,44 +86,6 @@ const shareOptions = {
 }
 const { isSupported, share } = useShare()
 
-const persons = ref<{
-    name: string;
-    img: string;
-    rate: number;
-    id: number;
-}[]>([
-    {
-        name: '冯小刚',
-        img: 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p45667.webp',
-        rate: 0.98,
-        id: 1000001
-    },
-    {
-        name: '冯小刚',
-        img: 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p45667.webp',
-        rate: 0.97,
-        id: 1000001
-    },
-    {
-        name: '冯小刚',
-        img: 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p45667.webp',
-        rate: 0.96,
-        id: 1000001
-    },
-    {
-        name: '冯小刚',
-        img: 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p45667.webp',
-        rate: 0.95,
-        id: 1000001
-    },
-    {
-        name: '冯小刚',
-        img: 'https://img1.doubanio.com/view/celebrity/s_ratio_celebrity/public/p45667.webp',
-        rate: 0.94,
-        id: 1000001
-    }
-])
-
 onMounted(() => {
     const personID = route.params['personid']
 
@@ -151,7 +97,6 @@ onMounted(() => {
         personDetail.value = res.data.data
     })
 
-    //ajax获取相似影人,即persons
 })
 
 onBeforeRouteUpdate((to, from) => {
@@ -165,7 +110,6 @@ onBeforeRouteUpdate((to, from) => {
         personDetail.value = res.data.data
     })
 
-    //ajax获取相似影人,即persons
 })
 
 </script>
@@ -205,7 +149,7 @@ onBeforeRouteUpdate((to, from) => {
     height: 100%;
 }
 .summary-text {
-    max-height: 70px;
+    max-height: 140px;
 }
 .scrollbar-content {
     display: flex;

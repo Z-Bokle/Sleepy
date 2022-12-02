@@ -2,7 +2,7 @@
     
     <el-scrollbar>
         
-        <el-menu :router="true" @click="handleClick">
+        <el-menu :router="true" @click="handleClick" :default-active="menuItemGroups[0].menuItems[0].index">
             
             <el-menu-item-group v-for="menuItemGroup in menuItemGroups" :title="menuItemGroup.title"
                 class="el-menu-item-group">

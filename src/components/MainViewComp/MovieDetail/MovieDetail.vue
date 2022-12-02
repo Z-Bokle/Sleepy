@@ -43,7 +43,7 @@
                         </el-descriptions-item>
                         <el-descriptions-item>
                             <template #label><span class="label">国家/地区</span></template>
-                            {{ countrires }}
+                            {{ countries }}
                         </el-descriptions-item>
                         <el-descriptions-item :span="1">
                             <template #label><span class="label">标签</span></template>
@@ -134,7 +134,7 @@ const genres = computed(() => {
     return array.join('/')
 })
 
-const countrires = computed(() => {
+const countries = computed(() => {
     let array:Array<string> = [];
     movieDetail.value.country.forEach((element) => array.push(element.name))
     return array.join('/')
