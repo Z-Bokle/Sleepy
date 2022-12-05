@@ -7,7 +7,7 @@
         <el-row>
             <el-col :span="16"><div class="wordcloud" id="wordcloud"></div></el-col>
             <el-col :span="8">
-                <div v-if="(currentTag.length > 0)">
+                <div v-if="showPanel">
                     <div class="title">{{ `标签名:${currentTag}` }}</div>
                     <div class="tip">该标签代表作品:</div>
                     <div class="movie-detail">
@@ -17,14 +17,11 @@
                 </div>
             </el-col>
         </el-row>
-    
-    
     </div>
-
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref, computed, onBeforeMount, onBeforeUnmount } from 'vue';
 import { useStore } from 'vuex';
 import * as echarts from 'echarts';
 import 'echarts-wordcloud';
@@ -37,6 +34,10 @@ const store = useStore()
 const movieid = ref()
 
 const currentTag = ref('')
+
+const myChart = ref()
+
+const showPanel = ref(false)
 
 const currentMovie = ref({
     img: '',
@@ -87,20 +88,15 @@ const option = computed(() => {
 })
 
 const initWordCloud = () => {
-    let wordCloudDiv = document.getElementById('wordcloud')
-    if (!wordCloudDiv) return;
-    let myChart = echarts.init(wordCloudDiv);
-
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option.value);
+    myChart.value.setOption(option.value);
     window.addEventListener("resize", function () {
-        myChart.resize();
+        myChart.value.resize();
     });
-    myChart.on('click', (params) => {
+    myChart.value.on('click', (params: any) => {
         // 点击标签
         if(movieid.value) router.push(`/moviedb/details/${movieid.value}`)
     })
-    myChart.on('mouseover', (params) => {
+    myChart.value.on('mouseover', (params: { name: string; }) => {
         // 鼠标移动到标签上
         currentTag.value = params.name
         movieid.value = keywords.value.find(keyword => keyword.name === params.name)?.mid
@@ -111,11 +107,12 @@ const initWordCloud = () => {
         })
         .then((res) => {
             currentMovie.value = res.data.data
+            showPanel.value = true
         })
     })
 }
 
-onMounted(() => {
+onBeforeMount(() =>{
     axios({
         method: 'get',
         url: '/suggest/wordcloud'
@@ -128,9 +125,21 @@ onMounted(() => {
         }
     })
     .then(() => {
-        initWordCloud();
+        let wordCloudDiv = document.getElementById('wordcloud')
+        if (wordCloudDiv && myChart.value === undefined) {
+            myChart.value = echarts.init(wordCloudDiv);
+            initWordCloud();            
+        }
     })
 })
+
+onBeforeUnmount(() => {
+    if(myChart.value !== undefined) {
+        echarts.dispose(myChart.value)
+        myChart.value = undefined        
+    }
+})
+
 </script>
 
 <style scoped>
@@ -148,8 +157,8 @@ onMounted(() => {
 }
 
 .wordcloud {
-    width: 800px;
-    height: 600px;
+    width: 600px;
+    height: 400px;
 }
 .title {
     font-size: larger;
